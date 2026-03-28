@@ -1,4 +1,4 @@
-# Diaz Florida Admin Dashboard
+# Diaz Jupiter Admin Dashboard
 
 ```
 ssh -i "server.pem" ubuntu@ec2-56-228-42-86.eu-north-1.compute.amazonaws.com
