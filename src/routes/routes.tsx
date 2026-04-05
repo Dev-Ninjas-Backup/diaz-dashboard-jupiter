@@ -12,21 +12,15 @@ import UpdateBlogPost from '@/pages/UpdateBlogPost';
 import WhyUs from '@/pages/WhyUs';
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-import AddListing from '../pages/AddListing';
-import EditListing from '../pages/EditListing';
 import AnalyticsAndReports from '../pages/AnalyticsAndReports';
 import ContentManagement from '../pages/ContentManagement';
 import AllLeads from '../pages/DailyLeads';
 import FeaturedAndHomeManagement from '../pages/Featured&HomeManagement';
-import ListingManagement from '../pages/ListingManagement';
 import Overview from '../pages/Overview';
-import SellerManagement from '../pages/SellerManagement';
 import Settings from '../pages/Settings';
-import SubscriptionManagement from '../pages/SubscriptionManagement';
 import UsersAndPermission from '../pages/UsersAndPermission';
 import LoginPage from '../pages/login/Login';
 import ProtectedRoute from './ProtectedRoute';
-import ManagePromoCodes from '@/pages/ManagePromoCodes';
 
 const router = createBrowserRouter([
   {
@@ -43,14 +37,10 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Overview /> },
           { path: 'overview', element: <Overview /> },
-          { path: 'listings', element: <ListingManagement /> },
-          { path: 'listings/add', element: <AddListing /> },
-          { path: 'listings/edit/:id', element: <EditListing /> },
-          { path: 'sellers', element: <SellerManagement /> },
+
           { path: 'yacht-leads', element: <AllLeads /> },
           { path: 'featured', element: <FeaturedAndHomeManagement /> },
           { path: 'content', element: <ContentManagement /> },
-          { path: 'subscription', element: <SubscriptionManagement /> },
           { path: 'content/new-article', element: <CreateNewArticle /> },
           { path: 'content/edit/:id', element: <UpdateBlogPost /> },
           { path: 'content/about-us', element: <AboutUs /> },
@@ -66,7 +56,6 @@ const router = createBrowserRouter([
           { path: 'users', element: <UsersAndPermission /> },
           { path: 'analytics', element: <AnalyticsAndReports /> },
           { path: 'settings', element: <Settings /> },
-          { path: 'promoCodeManagement', element: <ManagePromoCodes /> },
         ],
       },
     ],

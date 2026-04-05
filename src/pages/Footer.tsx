@@ -25,9 +25,7 @@ interface ApiLinkItem {
 }
 
 const Footer: React.FC = () => {
-  const [selectedSite, setSelectedSite] = useState<'FLORIDA' | 'JUPITER'>(
-    'FLORIDA',
-  );
+  const [selectedSite] = useState<'FLORIDA' | 'JUPITER'>('JUPITER');
   const [isPreview, setIsPreview] = useState(false);
   const navigate = useNavigate();
 
@@ -313,19 +311,6 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Site Selector */}
-          <select
-            value={selectedSite}
-            onChange={(e) =>
-              setSelectedSite(e.target.value as 'FLORIDA' | 'JUPITER')
-            }
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            aria-label="Select site"
-          >
-            <option value="FLORIDA">Florida</option>
-            <option value="JUPITER">Jupiter</option>
-          </select>
-
           {/* Preview Button */}
           <button
             type="button"
@@ -692,3 +677,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+

@@ -18,13 +18,7 @@ import {
 
 const ContactUs: React.FC = () => {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
-  const [selectedSite, setSelectedSite] = useState<'FLORIDA' | 'JUPITER'>(
-    'FLORIDA',
-  );
-
-  const handleSiteChange = (site: 'FLORIDA' | 'JUPITER') => {
-    setSelectedSite(site);
-  };
+  const [selectedSite] = useState<'FLORIDA' | 'JUPITER'>('JUPITER');
   const [formData, setFormData] = useState<ContactInfoFormData>({
     address: '',
     email: '',
@@ -47,7 +41,7 @@ const ContactUs: React.FC = () => {
       linkedin: '',
     },
     backgroundImage: null,
-    site: 'FLORIDA',
+    site: 'JUPITER',
   });
 
   const { data: contactInfoData, isLoading, isFetching } =
@@ -308,7 +302,7 @@ const ContactUs: React.FC = () => {
             {/* Sidebar */}
             <ContactInfoSidebar
               selectedSite={selectedSite}
-              onSiteChange={handleSiteChange}
+              onSiteChange={() => {}}
             />
           </div>
         )}

@@ -33,9 +33,7 @@ import Swal from 'sweetalert2';
 const AboutUs: React.FC = () => {
   const navigate = useNavigate();
   const [isPreviewMode, setIsPreviewMode] = useState(false);
-  const [selectedSite, setSelectedSite] = useState<'FLORIDA' | 'JUPITER'>(
-    'FLORIDA',
-  );
+  const [selectedSite] = useState<'FLORIDA' | 'JUPITER'>('JUPITER');
 
   const { data: aboutUsData, isLoading, isError } =
     useGetAboutUsContentQuery(selectedSite, {
@@ -304,10 +302,6 @@ const AboutUs: React.FC = () => {
       // Clear existing image URL when removing
       ...(file === null && { [existingKey]: '' }),
     }));
-  };
-
-  const handleSiteChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedSite(e.target.value as 'FLORIDA' | 'JUPITER');
   };
 
   const handleDescriptionChange = (value: string) => {
@@ -633,7 +627,7 @@ const AboutUs: React.FC = () => {
             </div>
             <AboutUsSidebar
               selectedSite={selectedSite}
-              onSiteChange={handleSiteChange}
+              onSiteChange={() => {}}
               updatedAt={aboutUsData?.updatedAt}
             />
           </div>
