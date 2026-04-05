@@ -18,14 +18,12 @@ interface PrivacyPolicyFormData {
 const PrivacyPolicy: React.FC = () => {
   const navigate = useNavigate();
   const [isPreviewMode, setIsPreviewMode] = useState(false);
-  const [selectedSite, setSelectedSite] = useState<'FLORIDA' | 'JUPITER'>(
-    'FLORIDA',
-  );
+  const [selectedSite] = useState<'FLORIDA' | 'JUPITER'>('JUPITER');
   const [editorKey, setEditorKey] = useState(0);
   const [formData, setFormData] = useState<PrivacyPolicyFormData>({
     title: '',
     content: '',
-    site: 'FLORIDA',
+    site: 'JUPITER',
   });
 
   const { data: getPrivacyPolicyData, isLoading, isError } =
@@ -73,11 +71,7 @@ const PrivacyPolicy: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    if (name === 'site') {
-      setSelectedSite(value as 'FLORIDA' | 'JUPITER');
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleContentChange = (value: string) => {
@@ -217,28 +211,6 @@ const PrivacyPolicy: React.FC = () => {
             </div>
 
             <div className="lg:col-span-1 space-y-6">
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-                <label
-                  htmlFor="site"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Select Site *
-                </label>
-                <select
-                  id="site"
-                  name="site"
-                  value={selectedSite}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="FLORIDA">Florida</option>
-                  <option value="JUPITER">Jupiter</option>
-                </select>
-                <p className="text-xs text-gray-500 mt-2">
-                  Select which site this content applies to
-                </p>
-              </div>
-
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                 <h3 className="text-sm font-medium text-gray-700 mb-2">
                   Page Info

@@ -1,4 +1,4 @@
-import { LuCircleCheckBig, LuFileText, LuPlus, LuStar } from 'react-icons/lu';
+import { LuFileText, LuStar } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 
 const QuickActions = () => {
@@ -7,20 +7,6 @@ const QuickActions = () => {
     <div className="w-full md:w-1/3 bg-white p-4 rounded-lg shadow border border-gray-200 flex flex-col">
       <h2 className="text-lg font-semibold">Quick Actions</h2>
       <ul className="mt-5 space-y-3 border-b border-gray-200 pb-5 shrink-0">
-        <li
-          onClick={() => navigate('/listings/add')}
-          className="border border-gray-200  flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
-        >
-          <LuPlus className="h-4 w-4" />
-          <span className="">Add New Listing</span>
-        </li>
-        <li
-          onClick={() => navigate('/listings')}
-          className="border border-gray-200  flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"
-        >
-          <LuCircleCheckBig className="h-4 w-4" />
-          <span className="">Manage Listings</span>
-        </li>
         <li
           onClick={() => navigate('/content')}
           className="border border-gray-200  flex items-center gap-2 px-4 py-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors"

@@ -8,15 +8,7 @@ const analyticsApi = baseApi.injectEndpoints({
         method: 'GET',
       }),
     }),
-
-    getTopViewedBoats: build.query({
-      query: () => ({
-        url: `/boats/top-viewed`,
-        method: 'GET',
-      }),
-    }),
   }),
 });
 
-export const { useGetAnalyticsStatsQuery, useGetTopViewedBoatsQuery } =
-  analyticsApi;
+export const { useGetAnalyticsStatsQuery } = analyticsApi;

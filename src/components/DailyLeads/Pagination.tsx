@@ -27,34 +27,15 @@ export const Pagination: React.FC<PaginationProps> = ({
     const showEllipsis = totalPages > 7;
 
     if (!showEllipsis) {
-      // Show all pages if 7 or fewer
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
-      // Always show first page
       pages.push(1);
-
-      if (currentPage > 3) {
-        pages.push('...');
-      }
-
-      // Show pages around current page
+      if (currentPage > 3) pages.push('...');
       const start = Math.max(2, currentPage - 1);
       const end = Math.min(totalPages - 1, currentPage + 1);
-
-      for (let i = start; i <= end; i++) {
-        pages.push(i);
-      }
-
-      if (currentPage < totalPages - 2) {
-        pages.push('...');
-      }
-
-      // Always show last page
-      if (totalPages > 1) {
-        pages.push(totalPages);
-      }
+      for (let i = start; i <= end; i++) pages.push(i);
+      if (currentPage < totalPages - 2) pages.push('...');
+      if (totalPages > 1) pages.push(totalPages);
     }
 
     return pages;
@@ -65,13 +46,9 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="bg-white px-4 py-4 flex flex-col gap-4 border-t border-gray-200">
-      {/* Top Row: Items per page and results info */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <label
-            htmlFor="itemsPerPage"
-            className="text-sm text-gray-700 whitespace-nowrap"
-          >
+          <label htmlFor="itemsPerPage" className="text-sm text-gray-700 whitespace-nowrap">
             Items per page:
           </label>
           <select
@@ -92,13 +69,10 @@ export const Pagination: React.FC<PaginationProps> = ({
             <span className="font-medium">{endItem}</span> of{' '}
             <span className="font-medium">{totalItems}</span> results
           </span>
-          <span className="sm:hidden">
-            {startItem}-{endItem} of {totalItems}
-          </span>
+          <span className="sm:hidden">{startItem}-{endItem} of {totalItems}</span>
         </div>
       </div>
 
-      {/* Bottom Row: Pagination controls */}
       <div className="flex items-center justify-center gap-2">
         <button
           onClick={() => onPageChange(currentPage - 1)}
@@ -110,20 +84,15 @@ export const Pagination: React.FC<PaginationProps> = ({
           <span className="hidden sm:inline ml-1">Prev</span>
         </button>
 
-        {/* Desktop pagination */}
         <div className="hidden md:flex gap-1">
           {getPageNumbers().map((pageNum, idx) => {
             if (pageNum === '...') {
               return (
-                <span
-                  key={`ellipsis-${idx}`}
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700"
-                >
+                <span key={`ellipsis-${idx}`} className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
                   ...
                 </span>
               );
             }
-
             return (
               <button
                 key={pageNum}
@@ -140,7 +109,6 @@ export const Pagination: React.FC<PaginationProps> = ({
           })}
         </div>
 
-        {/* Mobile/Tablet page indicator */}
         <div className="md:hidden px-4 py-2 text-sm font-medium text-gray-700">
           {currentPage} / {totalPages}
         </div>

@@ -9,15 +9,12 @@ import { IoIosLogOut } from 'react-icons/io';
 import {
   LuChartColumn,
   LuClipboardList,
-  LuCreditCard,
   LuFileText,
   LuLayoutDashboard,
   LuLayoutGrid,
   LuSettings,
   LuShield,
-  LuShip,
   LuStar,
-  LuUsers,
 } from 'react-icons/lu';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -28,16 +25,8 @@ const navItems = [
     path: '/',
     icon: <LuLayoutDashboard className="text-lg" />,
   },
-  {
-    label: 'FL Listings Management',
-    path: '/listings',
-    icon: <LuShip className="text-lg" />,
-  },
-  {
-    label: 'FL Seller Management',
-    path: '/sellers',
-    icon: <LuUsers className="text-lg" />,
-  },
+
+
   {
     label: 'Yacht Leads',
     path: '/yacht-leads',
@@ -53,16 +42,8 @@ const navItems = [
     path: '/content',
     icon: <LuFileText className="text-lg" />,
   },
-  {
-    label: 'Subscription Management',
-    path: '/subscription',
-    icon: <LuCreditCard className="text-lg" />,
-  },
-  {
-    label: 'Promo Code Management',
-    path: '/promoCodeManagement',
-    icon: <LuLayoutGrid className="text-lg" />,
-  },
+
+
   {
     label: 'Users & Permissions',
     path: '/users',

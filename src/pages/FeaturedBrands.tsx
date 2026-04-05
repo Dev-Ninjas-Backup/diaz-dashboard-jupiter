@@ -23,9 +23,7 @@ const FeaturedBrands: React.FC = () => {
   const navigate = useNavigate();
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [selectedSite, setSelectedSite] = useState<'FLORIDA' | 'JUPITER'>(
-    'FLORIDA',
-  );
+  const [selectedSite] = useState<'FLORIDA' | 'JUPITER'>('JUPITER');
   const [deletingBrandId, setDeletingBrandId] = useState<string | undefined>();
 
   const { data: getFeaturedBrandsData, isLoading } =
@@ -140,11 +138,6 @@ const FeaturedBrands: React.FC = () => {
     navigate('/content');
   };
 
-  const handleSiteChange = (site: 'FLORIDA' | 'JUPITER') => {
-    setSelectedSite(site);
-    setIsPreviewMode(false);
-  };
-
   if (isLoading) {
     return (
       <div className="p-4 md:p-6 max-w-7xl mx-auto">
@@ -174,7 +167,7 @@ const FeaturedBrands: React.FC = () => {
           <div className="space-y-6">
             <SiteSelector
               selectedSite={selectedSite}
-              onChange={handleSiteChange}
+              onChange={() => {}}
             />
 
             <BrandsGrid
@@ -200,3 +193,4 @@ const FeaturedBrands: React.FC = () => {
 };
 
 export default FeaturedBrands;
+

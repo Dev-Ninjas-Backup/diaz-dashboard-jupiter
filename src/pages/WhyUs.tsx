@@ -16,9 +16,7 @@ import {
 
 const WhyUs: React.FC = () => {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
-  const [selectedSite, setSelectedSite] = useState<'FLORIDA' | 'JUPITER'>(
-    'FLORIDA',
-  );
+  const [selectedSite] = useState<'FLORIDA' | 'JUPITER'>('JUPITER');
   const [formData, setFormData] = useState<WhyUsFormData>({
     title: '',
     description: '',
@@ -30,7 +28,7 @@ const WhyUs: React.FC = () => {
     image1: null,
     image2: null,
     image3: null,
-    site: 'FLORIDA',
+    site: 'JUPITER',
   });
 
   const { data: whyUsData, isLoading: isWhyUsLoading } =
@@ -86,11 +84,7 @@ const WhyUs: React.FC = () => {
     >,
   ) => {
     const { name, value } = e.target;
-    if (name === 'site') {
-      setSelectedSite(value as 'FLORIDA' | 'JUPITER');
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (
@@ -290,7 +284,7 @@ const WhyUs: React.FC = () => {
 
             <WhyUsSidebar
               selectedSite={selectedSite}
-              onSiteChange={setSelectedSite}
+              onSiteChange={() => {}}
               hasData={!!whyUsData?.data}
               onDelete={handleDelete}
             />
