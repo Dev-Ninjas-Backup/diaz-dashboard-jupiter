@@ -29,7 +29,9 @@ export const faqApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: faqContent,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'FAQ', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'FAQ', id: site },
+      ],
     }),
 
     deleteFaq: build.mutation({
@@ -37,7 +39,9 @@ export const faqApi = baseApi.injectEndpoints({
         url: `/faq?site=${site}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'FAQ', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'FAQ', id: site },
+      ],
     }),
   }),
 });

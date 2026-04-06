@@ -8,7 +8,9 @@ export const contactInfoApi = baseApi.injectEndpoints({
         url: `/contact/contact-info?site=${site}`,
         method: 'GET',
       }),
-      providesTags: (_result, _error, site) => [{ type: 'ContactInfo', id: site }],
+      providesTags: (_result, _error, site) => [
+        { type: 'ContactInfo', id: site },
+      ],
       keepUnusedDataFor: 0,
     }),
 
@@ -18,7 +20,9 @@ export const contactInfoApi = baseApi.injectEndpoints({
         method: 'POST',
         body: contactInfo,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'ContactInfo', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'ContactInfo', id: site },
+      ],
     }),
 
     updateContactInfo: build.mutation({
@@ -27,7 +31,9 @@ export const contactInfoApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: contactInfo,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'ContactInfo', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'ContactInfo', id: site },
+      ],
     }),
   }),
 });

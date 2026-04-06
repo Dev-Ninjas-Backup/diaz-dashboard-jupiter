@@ -35,10 +35,13 @@ const AboutUs: React.FC = () => {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [selectedSite] = useState<'FLORIDA' | 'JUPITER'>('JUPITER');
 
-  const { data: aboutUsData, isLoading, isError } =
-    useGetAboutUsContentQuery(selectedSite, {
-      refetchOnMountOrArgChange: true,
-    });
+  const {
+    data: aboutUsData,
+    isLoading,
+    isError,
+  } = useGetAboutUsContentQuery(selectedSite, {
+    refetchOnMountOrArgChange: true,
+  });
   const { data: ourStoryData, isLoading: isOurStoryLoading } =
     useGetOurStoryQuery(selectedSite, {
       refetchOnMountOrArgChange: true,
@@ -310,10 +313,7 @@ const AboutUs: React.FC = () => {
 
   const handleSave = async () => {
     // Validate required fields
-    if (
-      !formData.aboutTitle.trim() ||
-      !formData.aboutDescription.trim()
-    ) {
+    if (!formData.aboutTitle.trim() || !formData.aboutDescription.trim()) {
       Swal.fire({
         icon: 'warning',
         title: 'Missing Fields',

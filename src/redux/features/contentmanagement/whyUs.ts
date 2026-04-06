@@ -29,7 +29,9 @@ export const whyUsApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: whyUsContent,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'WhyUs', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'WhyUs', id: site },
+      ],
     }),
 
     deleteWhyUs: build.mutation({
@@ -37,7 +39,9 @@ export const whyUsApi = baseApi.injectEndpoints({
         url: `/why-us?site=${site}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'WhyUs', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'WhyUs', id: site },
+      ],
     }),
   }),
 });

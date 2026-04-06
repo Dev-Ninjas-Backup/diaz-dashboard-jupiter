@@ -31,10 +31,12 @@ const WhyUs: React.FC = () => {
     site: 'JUPITER',
   });
 
-  const { data: whyUsData, isLoading: isWhyUsLoading } =
-    useGetWhyUsQuery(selectedSite, {
+  const { data: whyUsData, isLoading: isWhyUsLoading } = useGetWhyUsQuery(
+    selectedSite,
+    {
       refetchOnMountOrArgChange: true,
-    });
+    },
+  );
   const [createWhyUs, { isLoading: isCreating }] = useCreateWhyUsMutation();
   const [updateWhyUs, { isLoading: isUpdating }] = useUpdateWhyUsMutation();
   const [deleteWhyUs] = useDeleteWhyUsMutation();
@@ -161,7 +163,11 @@ const WhyUs: React.FC = () => {
           site: selectedSite,
           whyUsContent: formDataToSend,
         }).unwrap();
-        await Swal.fire('Success!', 'Why Us section updated successfully', 'success');
+        await Swal.fire(
+          'Success!',
+          'Why Us section updated successfully',
+          'success',
+        );
       } else {
         formDataToSend.append('site', selectedSite);
         formDataToSend.append('title', formData.title.trim());
@@ -194,7 +200,11 @@ const WhyUs: React.FC = () => {
         await createWhyUs({
           whyUsContent: formDataToSend,
         }).unwrap();
-        await Swal.fire('Success!', 'Why Us section created successfully', 'success');
+        await Swal.fire(
+          'Success!',
+          'Why Us section created successfully',
+          'success',
+        );
       }
     } catch (error) {
       Swal.fire(

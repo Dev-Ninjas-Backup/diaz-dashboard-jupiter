@@ -9,6 +9,19 @@ const permissionManageApi = baseApi.injectEndpoints({
       }),
       providesTags: ['PERMISSION'],
     }),
+
+    getAvailablePermissions: build.query<string[], void>({
+      query: () => ({
+        url: `/user-permissions/available-permissions`,
+        method: 'GET',
+      }),
+      transformResponse: (response: {
+        status: string;
+        total: number;
+        permissions: string[];
+      }) => response.permissions,
+    }),
+
     createPermission: build.mutation({
       query: (data) => ({
         url: `/user-permissions/add-admin`,
@@ -17,6 +30,7 @@ const permissionManageApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['PERMISSION'],
     }),
+
     changeRole: build.mutation({
       query: ({ id, data }) => ({
         url: `/user-permissions/${id}?changerole=${data.role}`,
@@ -25,10 +39,19 @@ const permissionManageApi = baseApi.injectEndpoints({
       invalidatesTags: ['PERMISSION'],
     }),
 
-    deletePermission: build.mutation({
-      query: (id) => ({
-        url: `/user-permissions/delete/${id}`,
+    updatePermissions: build.mutation({
+      query: ({ id, permissions }: { id: string; permissions: string[] }) => ({
+        url: `/user-permissions/${id}/permissions`,
         method: 'PATCH',
+        body: { permissions },
+      }),
+      invalidatesTags: ['PERMISSION'],
+    }),
+
+    deletePermission: build.mutation({
+      query: (id: string) => ({
+        url: `/user-permissions/${id}`,
+        method: 'DELETE',
       }),
       invalidatesTags: ['PERMISSION'],
     }),
@@ -37,7 +60,9 @@ const permissionManageApi = baseApi.injectEndpoints({
 
 export const {
   useGetAllPermissionUsersQuery,
+  useGetAvailablePermissionsQuery,
   useCreatePermissionMutation,
   useChangeRoleMutation,
+  useUpdatePermissionsMutation,
   useDeletePermissionMutation,
 } = permissionManageApi;

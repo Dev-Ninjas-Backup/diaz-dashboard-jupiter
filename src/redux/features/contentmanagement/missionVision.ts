@@ -7,7 +7,9 @@ export const missionVisionApi = baseApi.injectEndpoints({
         url: `/aboutus/mission-vision?site=${site}`,
         method: 'GET',
       }),
-      providesTags: (_result, _error, site) => [{ type: 'MissionVision', id: site }],
+      providesTags: (_result, _error, site) => [
+        { type: 'MissionVision', id: site },
+      ],
       keepUnusedDataFor: 0,
     }),
 
@@ -17,7 +19,9 @@ export const missionVisionApi = baseApi.injectEndpoints({
         method: 'POST',
         body: formData,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'MissionVision', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'MissionVision', id: site },
+      ],
     }),
 
     updateMissionVision: build.mutation({
@@ -26,7 +30,9 @@ export const missionVisionApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: formData,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'MissionVision', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'MissionVision', id: site },
+      ],
     }),
   }),
 });

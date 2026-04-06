@@ -1,4 +1,6 @@
 import AboutUs from '@/pages/AboutUs';
+import BoatsInventory from '@/pages/BoatsInventory';
+import DispatchReport from '@/pages/DispatchReport';
 import CategoryManagement from '@/pages/CategoryManagement';
 import ContactUs from '@/pages/ContactUs';
 import CreateNewArticle from '@/pages/CreateNewArticle';
@@ -53,6 +55,8 @@ const router = createBrowserRouter([
           { path: 'content/our-team', element: <OurTeam /> },
           { path: 'content/featured-brands', element: <FeaturedBrands /> },
           { path: 'content/category', element: <CategoryManagement /> },
+          { path: 'boats', element: <BoatsInventory /> },
+          { path: 'dispatch-report', element: <DispatchReport /> },
           { path: 'users', element: <UsersAndPermission /> },
           { path: 'analytics', element: <AnalyticsAndReports /> },
           { path: 'settings', element: <Settings /> },

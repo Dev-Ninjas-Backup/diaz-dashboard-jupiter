@@ -10,7 +10,10 @@ interface DailyLeadsTableProps {
   onRefetch?: () => void;
 }
 
-export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({ leads, onRefetch }) => {
+export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({
+  leads,
+  onRefetch,
+}) => {
   const [updateLeadStatus] = useUpdateLeadStatusMutation();
   const [updatingId, setUpdatingId] = useState<number | null>(null);
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
@@ -32,7 +35,8 @@ export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({ leads, onRefet
       return;
     }
 
-    const newStatus = lead.status === 'contacted' ? 'not contacted' : 'contacted';
+    const newStatus =
+      lead.status === 'contacted' ? 'not contacted' : 'contacted';
     setUpdatingId(lead.id);
 
     try {
@@ -66,7 +70,9 @@ export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({ leads, onRefet
           <User className="w-8 h-8 text-gray-400" />
         </div>
         <p className="text-gray-500 font-medium">No leads found</p>
-        <p className="text-sm text-gray-400 mt-1">AI-generated leads will appear here</p>
+        <p className="text-sm text-gray-400 mt-1">
+          AI-generated leads will appear here
+        </p>
       </div>
     );
   }
@@ -100,9 +106,14 @@ export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({ leads, onRefet
           </thead>
           <tbody className="divide-y divide-gray-200">
             {leads.map((lead, index) => (
-              <tr key={lead.id || index} className="hover:bg-gray-50 transition-colors">
+              <tr
+                key={lead.id || index}
+                className="hover:bg-gray-50 transition-colors"
+              >
                 <td className="px-6 py-4">
-                  <span className="text-sm font-medium text-gray-900">{index + 1}</span>
+                  <span className="text-sm font-medium text-gray-900">
+                    {index + 1}
+                  </span>
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex flex-col">
@@ -137,14 +148,31 @@ export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({ leads, onRefet
                   >
                     {updatingId === lead.id ? (
                       <span className="flex items-center gap-1">
-                        <svg className="animate-spin h-3 w-3" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                        <svg
+                          className="animate-spin h-3 w-3"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                            fill="none"
+                          />
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          />
                         </svg>
                         Updating...
                       </span>
+                    ) : lead.status === 'contacted' ? (
+                      'Contacted'
                     ) : (
-                      lead.status === 'contacted' ? 'Contacted' : 'Not Contacted'
+                      'Not Contacted'
                     )}
                   </button>
                 </td>
@@ -171,11 +199,16 @@ export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({ leads, onRefet
       {/* Mobile Card View */}
       <div className="lg:hidden divide-y divide-gray-200">
         {leads.map((lead, index) => (
-          <div key={lead.id || index} className="p-4 hover:bg-gray-50 transition-colors">
+          <div
+            key={lead.id || index}
+            className="p-4 hover:bg-gray-50 transition-colors"
+          >
             {/* Header */}
             <div className="flex items-start justify-between mb-3">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-gray-900">#{index + 1}</span>
+                <span className="text-sm font-semibold text-gray-900">
+                  #{index + 1}
+                </span>
                 <button
                   onClick={() => handleStatusToggle(lead)}
                   disabled={updatingId === lead.id || !lead.id}
@@ -185,10 +218,20 @@ export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({ leads, onRefet
                       : 'bg-yellow-100 text-yellow-800'
                   }`}
                 >
-                  {updatingId === lead.id ? 'Updating...' : (lead.status === 'contacted' ? 'Contacted' : 'Not Contacted')}
+                  {updatingId === lead.id
+                    ? 'Updating...'
+                    : lead.status === 'contacted'
+                      ? 'Contacted'
+                      : 'Not Contacted'}
                 </button>
               </div>
-              <button type="button" className="p-1 text-gray-600 hover:text-blue-600 rounded cursor-pointer" onClick={() => handleViewDetails(lead)} title="View Details" aria-label="View Details">
+              <button
+                type="button"
+                className="p-1 text-gray-600 hover:text-blue-600 rounded cursor-pointer"
+                onClick={() => handleViewDetails(lead)}
+                title="View Details"
+                aria-label="View Details"
+              >
                 <Eye className="w-4 h-4" />
               </button>
             </div>
@@ -213,11 +256,15 @@ export const DailyLeadsTable: React.FC<DailyLeadsTableProps> = ({ leads, onRefet
             <div className="flex items-center justify-between pt-3 border-t border-gray-100">
               <div>
                 <p className="text-xs text-gray-500 mb-0.5">Interested In</p>
-                <p className="text-sm font-medium text-blue-600">{lead.product || 'N/A'}</p>
+                <p className="text-sm font-medium text-blue-600">
+                  {lead.product || 'N/A'}
+                </p>
               </div>
               <div className="text-right">
                 <p className="text-xs text-gray-500 mb-0.5">Date</p>
-                <p className="text-sm text-gray-600">{formatDate(lead.created_at)}</p>
+                <p className="text-sm text-gray-600">
+                  {formatDate(lead.created_at)}
+                </p>
               </div>
             </div>
           </div>

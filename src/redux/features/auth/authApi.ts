@@ -10,6 +10,14 @@ const authApi = baseApi.injectEndpoints({
       }),
     }),
 
+    getProfile: build.query({
+      query: () => ({
+        url: '/auth/profile',
+        method: 'GET',
+      }),
+      transformResponse: (response: { data: any }) => response.data,
+    }),
+
     forgotPassword: build.mutation({
       query: (credentials) => ({
         url: '/auth/forgot-password',
@@ -30,6 +38,7 @@ const authApi = baseApi.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useGetProfileQuery,
   useForgotPasswordMutation,
   useResetPasswordMutation,
 } = authApi;

@@ -11,7 +11,10 @@ export const featuredBrandsApi = baseApi.injectEndpoints({
       providesTags: (result, _error, site) =>
         result
           ? [
-              ...result.map(({ _id }: { _id: string }) => ({ type: 'FeaturedBrands' as const, id: _id })),
+              ...result.map(({ _id }: { _id: string }) => ({
+                type: 'FeaturedBrands' as const,
+                id: _id,
+              })),
               { type: 'FeaturedBrands', id: `LIST-${site}` },
             ]
           : [{ type: 'FeaturedBrands', id: `LIST-${site}` }],
@@ -46,7 +49,10 @@ export const featuredBrandsApi = baseApi.injectEndpoints({
         url: `/featured-brands/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'FeaturedBrands', id: 'LIST-FLORIDA' }, { type: 'FeaturedBrands', id: 'LIST-JUPITER' }],
+      invalidatesTags: [
+        { type: 'FeaturedBrands', id: 'LIST-FLORIDA' },
+        { type: 'FeaturedBrands', id: 'LIST-JUPITER' },
+      ],
     }),
   }),
 });

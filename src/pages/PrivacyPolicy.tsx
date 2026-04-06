@@ -26,10 +26,13 @@ const PrivacyPolicy: React.FC = () => {
     site: 'JUPITER',
   });
 
-  const { data: getPrivacyPolicyData, isLoading, isError } =
-    useGetPrivacyPolicyQuery(selectedSite, {
-      refetchOnMountOrArgChange: true,
-    });
+  const {
+    data: getPrivacyPolicyData,
+    isLoading,
+    isError,
+  } = useGetPrivacyPolicyQuery(selectedSite, {
+    refetchOnMountOrArgChange: true,
+  });
   const [createPrivacyPolicy, { isLoading: isCreating }] =
     useCreatePrivacyPolicyMutation();
   const [updatePrivacyPolicy, { isLoading: isUpdating }] =
@@ -43,7 +46,7 @@ const PrivacyPolicy: React.FC = () => {
     console.log('🟢 isError:', isError);
     console.log('🟢 isLoading:', isLoading);
     console.log('🟢 selectedSite:', selectedSite);
-    
+
     if (getPrivacyPolicyData && !isError) {
       console.log('✅ Setting form data with:', {
         title: getPrivacyPolicyData.privacyTitle,
@@ -54,7 +57,7 @@ const PrivacyPolicy: React.FC = () => {
         content: getPrivacyPolicyData.privacyDescription || '',
         site: selectedSite,
       });
-      setEditorKey(prev => prev + 1);
+      setEditorKey((prev) => prev + 1);
     } else {
       console.log('⚠️ Resetting form data');
       // Reset form when no data for selected site or error
@@ -63,7 +66,7 @@ const PrivacyPolicy: React.FC = () => {
         content: '',
         site: selectedSite,
       });
-      setEditorKey(prev => prev + 1);
+      setEditorKey((prev) => prev + 1);
     }
   }, [getPrivacyPolicyData, selectedSite, isError, isLoading]);
 
@@ -77,8 +80,6 @@ const PrivacyPolicy: React.FC = () => {
   const handleContentChange = (value: string) => {
     setFormData((prev) => ({ ...prev, content: value }));
   };
-
-
 
   const handleSave = async () => {
     try {
@@ -101,7 +102,9 @@ const PrivacyPolicy: React.FC = () => {
 
       await Swal.fire({
         icon: 'success',
-        title: getPrivacyPolicyData ? 'Privacy Policy Updated' : 'Privacy Policy Created',
+        title: getPrivacyPolicyData
+          ? 'Privacy Policy Updated'
+          : 'Privacy Policy Created',
         text: `Privacy Policy page has been ${getPrivacyPolicyData ? 'updated' : 'created'} successfully!`,
       });
       navigate('/content');

@@ -26,10 +26,13 @@ const TermsOfService: React.FC = () => {
     site: 'JUPITER',
   });
 
-  const { data: getTermsData, isLoading, isError } =
-    useGetTermsAndConditionsQuery(selectedSite, {
-      refetchOnMountOrArgChange: true,
-    });
+  const {
+    data: getTermsData,
+    isLoading,
+    isError,
+  } = useGetTermsAndConditionsQuery(selectedSite, {
+    refetchOnMountOrArgChange: true,
+  });
   const [createTermsAndConditions, { isLoading: isCreating }] =
     useCreateTermsAndConditionsMutation();
   const [updateTermsAndConditions, { isLoading: isUpdating }] =
@@ -43,7 +46,7 @@ const TermsOfService: React.FC = () => {
     console.log('🔵 isError:', isError);
     console.log('🔵 isLoading:', isLoading);
     console.log('🔵 selectedSite:', selectedSite);
-    
+
     if (getTermsData && !isError) {
       console.log('✅ Setting form data with:', {
         title: getTermsData.termsTitle,
@@ -54,7 +57,7 @@ const TermsOfService: React.FC = () => {
         content: getTermsData.termsDescription || '',
         site: selectedSite,
       });
-      setEditorKey(prev => prev + 1);
+      setEditorKey((prev) => prev + 1);
     } else {
       console.log('⚠️ Resetting form data');
       // Reset form when no data for selected site or error
@@ -63,7 +66,7 @@ const TermsOfService: React.FC = () => {
         content: '',
         site: selectedSite,
       });
-      setEditorKey(prev => prev + 1);
+      setEditorKey((prev) => prev + 1);
     }
   }, [getTermsData, selectedSite, isError, isLoading]);
 
@@ -77,8 +80,6 @@ const TermsOfService: React.FC = () => {
   const handleContentChange = (value: string) => {
     setFormData((prev) => ({ ...prev, content: value }));
   };
-
-
 
   const handleSave = async () => {
     try {
@@ -101,7 +102,9 @@ const TermsOfService: React.FC = () => {
 
       await Swal.fire({
         icon: 'success',
-        title: getTermsData ? 'Terms of Service Updated' : 'Terms of Service Created',
+        title: getTermsData
+          ? 'Terms of Service Updated'
+          : 'Terms of Service Created',
         text: `Terms of Service page has been ${getTermsData ? 'updated' : 'created'} successfully!`,
       });
       navigate('/content');

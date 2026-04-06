@@ -7,7 +7,9 @@ export const whatSetsUsApartApi = baseApi.injectEndpoints({
         url: `/aboutus/what-sets-us-apart?site=${site}`,
         method: 'GET',
       }),
-      providesTags: (_result, _error, site) => [{ type: 'WhatSetsUsApart', id: site }],
+      providesTags: (_result, _error, site) => [
+        { type: 'WhatSetsUsApart', id: site },
+      ],
       keepUnusedDataFor: 0,
     }),
 
@@ -17,7 +19,9 @@ export const whatSetsUsApartApi = baseApi.injectEndpoints({
         method: 'POST',
         body: formData,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'WhatSetsUsApart', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'WhatSetsUsApart', id: site },
+      ],
     }),
 
     updateWhatSetsUsApart: build.mutation({
@@ -26,7 +30,9 @@ export const whatSetsUsApartApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: formData,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'WhatSetsUsApart', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'WhatSetsUsApart', id: site },
+      ],
     }),
   }),
 });

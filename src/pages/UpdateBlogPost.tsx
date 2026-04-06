@@ -24,7 +24,11 @@ const UpdateBlogPost: React.FC = () => {
   const [isPreviewMode, setIsPreviewMode] = useState(false);
   const [editorKey, setEditorKey] = useState(0);
   const [updateBlog, { isLoading: isUpdating }] = useUpdateBlogMutation();
-  const { data: blogData, isLoading, refetch } = useGetBlogByIdQuery(id!, {
+  const {
+    data: blogData,
+    isLoading,
+    refetch,
+  } = useGetBlogByIdQuery(id!, {
     skip: !id,
     refetchOnMountOrArgChange: true,
   });
@@ -48,7 +52,7 @@ const UpdateBlogPost: React.FC = () => {
         blogImagePreview: blogData.blogImage?.url || '',
         existingImageUrl: blogData.blogImage?.url || '',
       });
-      setEditorKey(prev => prev + 1);
+      setEditorKey((prev) => prev + 1);
     }
   }, [blogData]);
 
@@ -86,7 +90,10 @@ const UpdateBlogPost: React.FC = () => {
   };
 
   const handleRemoveImage = () => {
-    if (formData.blogImagePreview && formData.blogImagePreview !== formData.existingImageUrl) {
+    if (
+      formData.blogImagePreview &&
+      formData.blogImagePreview !== formData.existingImageUrl
+    ) {
       URL.revokeObjectURL(formData.blogImagePreview);
     }
     setFormData((prev) => ({
@@ -303,7 +310,9 @@ const UpdateBlogPost: React.FC = () => {
                       className="mt-2 flex items-center justify-center gap-2 w-full py-2 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors text-sm text-gray-600"
                     >
                       <Upload className="w-4 h-4" />
-                      {formData.blogImage ? 'Change selection' : 'Replace image'}
+                      {formData.blogImage
+                        ? 'Change selection'
+                        : 'Replace image'}
                       <input
                         id="blogImageUpload"
                         type="file"
@@ -314,7 +323,8 @@ const UpdateBlogPost: React.FC = () => {
                     </label>
                     {formData.blogImage && (
                       <p className="text-xs text-gray-500 mt-1">
-                        New: {formData.blogImage.name} ({(formData.blogImage.size / 1024).toFixed(2)} KB)
+                        New: {formData.blogImage.name} (
+                        {(formData.blogImage.size / 1024).toFixed(2)} KB)
                       </p>
                     )}
                   </div>
@@ -330,7 +340,9 @@ const UpdateBlogPost: React.FC = () => {
                           <span className="font-semibold">Click to upload</span>{' '}
                           or drag and drop
                         </p>
-                        <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                        <p className="text-xs text-gray-500">
+                          PNG, JPG, GIF up to 5MB
+                        </p>
                       </div>
                       <input
                         id="blogImageUpload"

@@ -1,5 +1,7 @@
 import { NotificationBell } from '@/components/shared/NotificationBell';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useGetProfileQuery } from '@/redux/features/auth/authApi';
+import { useAppSelector } from '@/redux/typeHook';
 import { Search, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -69,6 +71,21 @@ const UpperNavbar = () => {
   const [filteredRoutes, setFilteredRoutes] = useState(searchableRoutes);
   const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  const authUser = useAppSelector((state) => state.auth.user);
+  const { data: profile } = useGetProfileQuery(undefined, { skip: !authUser });
+  const user = profile ?? authUser;
+
+  const getInitials = (name: string) =>
+    name
+      ?.split(' ')
+      .map((n: string) => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2) ?? 'AU';
+
+  const getRoleLabel = (role: string) =>
+    role === 'SUPER_ADMIN' ? 'Super Admin' : 'Admin';
 
   // Filter routes based on search query
   useEffect(() => {
@@ -181,16 +198,18 @@ const UpperNavbar = () => {
           {/* User Profile */}
           <div className="flex items-center gap-3">
             <Avatar className="h-9 w-9 border-2 border-gray-200">
-              <AvatarImage src="" alt="Admin User" />
+              <AvatarImage src={user?.avatarUrl ?? ''} alt={user?.name ?? ''} />
               <AvatarFallback className="bg-blue-600 text-white text-sm font-semibold">
-                AU
+                {getInitials(user?.name ?? '')}
               </AvatarFallback>
             </Avatar>
             <div className="hidden sm:block text-left">
               <p className="text-sm font-semibold text-gray-900 leading-tight">
-                Admin User
+                {user?.name ?? 'Admin User'}
               </p>
-              <p className="text-xs text-gray-500 leading-tight">Super Admin</p>
+              <p className="text-xs text-gray-500 leading-tight">
+                {user?.role ? getRoleLabel(user.role) : 'Admin'}
+              </p>
             </div>
           </div>
         </div>

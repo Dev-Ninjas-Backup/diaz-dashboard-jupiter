@@ -26,10 +26,12 @@ const FeaturedBrands: React.FC = () => {
   const [selectedSite] = useState<'FLORIDA' | 'JUPITER'>('JUPITER');
   const [deletingBrandId, setDeletingBrandId] = useState<string | undefined>();
 
-  const { data: getFeaturedBrandsData, isLoading } =
-    useGetFeaturedBrandsQuery(selectedSite, {
+  const { data: getFeaturedBrandsData, isLoading } = useGetFeaturedBrandsQuery(
+    selectedSite,
+    {
       refetchOnMountOrArgChange: true,
-    });
+    },
+  );
   const [createFeaturedBrands, { isLoading: isCreating }] =
     useCreateFeaturedBrandsMutation();
   const [updateFeaturedBrands] = useUpdateFeaturedBrandsMutation();
@@ -165,10 +167,7 @@ const FeaturedBrands: React.FC = () => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         {!isPreviewMode ? (
           <div className="space-y-6">
-            <SiteSelector
-              selectedSite={selectedSite}
-              onChange={() => {}}
-            />
+            <SiteSelector selectedSite={selectedSite} onChange={() => {}} />
 
             <BrandsGrid
               brands={brands}
@@ -193,4 +192,3 @@ const FeaturedBrands: React.FC = () => {
 };
 
 export default FeaturedBrands;
-
