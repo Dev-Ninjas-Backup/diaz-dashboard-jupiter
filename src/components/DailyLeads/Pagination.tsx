@@ -48,7 +48,10 @@ export const Pagination: React.FC<PaginationProps> = ({
     <div className="bg-white px-4 py-4 flex flex-col gap-4 border-t border-gray-200">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <label htmlFor="itemsPerPage" className="text-sm text-gray-700 whitespace-nowrap">
+          <label
+            htmlFor="itemsPerPage"
+            className="text-sm text-gray-700 whitespace-nowrap"
+          >
             Items per page:
           </label>
           <select
@@ -69,7 +72,9 @@ export const Pagination: React.FC<PaginationProps> = ({
             <span className="font-medium">{endItem}</span> of{' '}
             <span className="font-medium">{totalItems}</span> results
           </span>
-          <span className="sm:hidden">{startItem}-{endItem} of {totalItems}</span>
+          <span className="sm:hidden">
+            {startItem}-{endItem} of {totalItems}
+          </span>
         </div>
       </div>
 
@@ -88,7 +93,10 @@ export const Pagination: React.FC<PaginationProps> = ({
           {getPageNumbers().map((pageNum, idx) => {
             if (pageNum === '...') {
               return (
-                <span key={`ellipsis-${idx}`} className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
+                <span
+                  key={`ellipsis-${idx}`}
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700"
+                >
                   ...
                 </span>
               );

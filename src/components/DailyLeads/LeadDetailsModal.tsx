@@ -31,7 +31,9 @@ export const LeadDetailsModal: React.FC<LeadDetailsModalProps> = ({
   const fetchChatHistory = async () => {
     setIsLoadingChat(true);
     try {
-      const AI_API_URL = import.meta.env.VITE_AI_API_URL || 'https://ai.jupitermarinesales.com/api/v1';
+      const AI_API_URL =
+        import.meta.env.VITE_AI_API_URL ||
+        'https://ai.jupitermarinesales.com/api/v1';
       const response = await fetch(
         `${AI_API_URL}/chat_history_sql?user_id=${lead.user_id}`,
       );

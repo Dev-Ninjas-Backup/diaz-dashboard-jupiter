@@ -17,7 +17,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isPremium }) => {
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    const url = import.meta.env.VITE_FLORIDA_FRONTEND_URL || 'https://development.floridayachttrader.com';
+    const url =
+      import.meta.env.VITE_FLORIDA_FRONTEND_URL ||
+      'https://development.floridayachttrader.com';
     window.open(`${url}/search-listing/${product.id}`, '_blank');
   };
 

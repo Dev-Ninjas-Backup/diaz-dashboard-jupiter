@@ -19,7 +19,10 @@ interface RecentActivityProps {
   isLoading?: boolean;
 }
 
-const RecentActivity = ({ recentActivityData, isLoading = false }: RecentActivityProps) => {
+const RecentActivity = ({
+  recentActivityData,
+  isLoading = false,
+}: RecentActivityProps) => {
   const [visibleCount, setVisibleCount] = useState(4);
 
   const handleViewMore = () => {

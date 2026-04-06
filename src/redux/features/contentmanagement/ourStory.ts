@@ -17,7 +17,9 @@ export const ourStoryApi = baseApi.injectEndpoints({
         method: 'POST',
         body: formData,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'OurStory', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'OurStory', id: site },
+      ],
     }),
 
     updateOurStory: build.mutation({
@@ -26,7 +28,9 @@ export const ourStoryApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: formData,
       }),
-      invalidatesTags: (_result, _error, { site }) => [{ type: 'OurStory', id: site }],
+      invalidatesTags: (_result, _error, { site }) => [
+        { type: 'OurStory', id: site },
+      ],
     }),
   }),
 });

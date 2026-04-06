@@ -15,6 +15,8 @@ interface TeamMemberFormData {
   name: string;
   designation: string;
   bio: string;
+  email: string;
+  contact: string;
   image: File | null;
   isActive: boolean;
 }
@@ -50,6 +52,8 @@ const OurTeam: React.FC = () => {
     name: '',
     designation: '',
     bio: '',
+    email: '',
+    contact: '',
     image: null,
     isActive: true,
   });
@@ -78,6 +82,8 @@ const OurTeam: React.FC = () => {
       name: '',
       designation: '',
       bio: '',
+      email: '',
+      contact: '',
       image: null,
       isActive: true,
     });
@@ -91,6 +97,8 @@ const OurTeam: React.FC = () => {
       name: member.name,
       designation: member.designation,
       bio: member.bio || '',
+      email: member.email || '',
+      contact: member.contact || '',
       image: null,
       isActive: member.isActive,
     });
@@ -99,6 +107,8 @@ const OurTeam: React.FC = () => {
       name: member.name,
       designation: member.designation,
       bio: member.bio || '',
+      email: member.email || '',
+      contact: member.contact || '',
       image: null,
       isActive: member.isActive,
       existingImageUrl: member.image?.url,
@@ -114,6 +124,8 @@ const OurTeam: React.FC = () => {
       name: '',
       designation: '',
       bio: '',
+      email: '',
+      contact: '',
       image: null,
       isActive: true,
     });
@@ -137,13 +149,10 @@ const OurTeam: React.FC = () => {
       const formDataToSend = new FormData();
       formDataToSend.append('name', formData.name);
       formDataToSend.append('designation', formData.designation);
-      if (formData.bio) {
-        formDataToSend.append('bio', formData.bio);
-      }
-
-      if (formData.image) {
-        formDataToSend.append('image', formData.image);
-      }
+      if (formData.bio) formDataToSend.append('bio', formData.bio);
+      if (formData.email) formDataToSend.append('email', formData.email);
+      if (formData.contact) formDataToSend.append('contact', formData.contact);
+      if (formData.image) formDataToSend.append('image', formData.image);
 
       if (editingMember?.id) {
         await updateTeamMember({
@@ -451,6 +460,36 @@ const OurTeam: React.FC = () => {
                     className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                     placeholder="e.g., Senior Developer"
                     required
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="e.g., john@example.com"
+                  />
+                </div>
+
+                {/* Contact */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Contact Number
+                  </label>
+                  <input
+                    type="tel"
+                    name="contact"
+                    value={formData.contact}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="e.g., +1 234 567 8900"
                   />
                 </div>
 

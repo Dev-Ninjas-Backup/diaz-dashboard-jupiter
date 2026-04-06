@@ -60,7 +60,7 @@ const FAQ: React.FC = () => {
             : [{ id: '1', question: '', answer: '' }],
         site: selectedSite,
       });
-      setEditorRefreshKey(prev => prev + 1);
+      setEditorRefreshKey((prev) => prev + 1);
     } else {
       // Reset to default when no data or site changes
       setFormData({
@@ -69,7 +69,7 @@ const FAQ: React.FC = () => {
         faqs: [{ id: '1', question: '', answer: '' }],
         site: selectedSite,
       });
-      setEditorRefreshKey(prev => prev + 1);
+      setEditorRefreshKey((prev) => prev + 1);
     }
   }, [faqData, selectedSite]);
 

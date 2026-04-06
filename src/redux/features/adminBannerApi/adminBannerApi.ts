@@ -117,7 +117,14 @@ export const adminBannerApi = baseApi.injectEndpoints({
         if (subtitle) formData.append('subtitle', subtitle);
         if (background) formData.append('background', background);
 
-        console.log('Update banner payload:', { id, page, site, bannerTitle, subtitle, hasFile: !!background });
+        console.log('Update banner payload:', {
+          id,
+          page,
+          site,
+          bannerTitle,
+          subtitle,
+          hasFile: !!background,
+        });
 
         return {
           url: `/banners/${id}`,
@@ -138,7 +145,6 @@ export const adminBannerApi = baseApi.injectEndpoints({
         return response;
       },
     }),
-
   }),
 });
 

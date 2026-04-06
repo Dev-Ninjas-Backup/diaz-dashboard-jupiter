@@ -19,7 +19,10 @@ const blogManagementApi = baseApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }: { id: string }) => ({ type: 'Blog' as const, id })),
+              ...result.map(({ id }: { id: string }) => ({
+                type: 'Blog' as const,
+                id,
+              })),
               { type: 'Blog', id: 'LIST' },
             ]
           : [{ type: 'Blog', id: 'LIST' }],

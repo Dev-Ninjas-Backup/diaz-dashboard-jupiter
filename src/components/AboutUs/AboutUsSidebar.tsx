@@ -6,7 +6,7 @@ export const AboutUsSidebar: React.FC<AboutUsSidebarProps> = ({
   updatedAt,
 }) => {
   return (
-      <div className="lg:col-span-1 space-y-6">
+    <div className="lg:col-span-1 space-y-6">
       {/* Page Info */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
         <h3 className="text-sm font-medium text-gray-700 mb-2">Page Info</h3>

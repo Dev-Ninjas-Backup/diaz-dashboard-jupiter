@@ -35,9 +35,12 @@ const Footer: React.FC = () => {
     isLoading,
     isError,
     error,
-  } = useGetFooterQuery({ site: selectedSite }, {
-    refetchOnMountOrArgChange: true,
-  });
+  } = useGetFooterQuery(
+    { site: selectedSite },
+    {
+      refetchOnMountOrArgChange: true,
+    },
+  );
 
   const [createFooter, { isLoading: isCreating }] = useCreateFooterMutation();
   const [updateFooter, { isLoading: isUpdating }] = useUpdateFooterMutation();
@@ -677,4 +680,3 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
-

@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { DailyLeadsResponse, Lead } from '@/types/daily-leads-types';
 
-const AI_API_URL = import.meta.env.VITE_AI_API_URL || 'https://ai.jupitermarinesales.com/api/v1';
+const AI_API_URL =
+  import.meta.env.VITE_AI_API_URL || 'https://ai.jupitermarinesales.com/api/v1';
 
 // Create separate API for AI endpoints (no auth needed)
 export const aiApi = createApi({

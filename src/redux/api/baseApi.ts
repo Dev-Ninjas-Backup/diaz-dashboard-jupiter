@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { RootState } from '../store';
 
 // Use environment variable or fallback to hardcoded URL
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.floridayachttrader.com';
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'https://api.floridayachttrader.com';
 
 console.log('🔧 Redux API Base URL:', API_BASE_URL);
 
@@ -56,6 +57,7 @@ export const baseApi = createApi({
     'WhatSetsUsApart',
     'Notification',
     'PageBanner',
+    'AssignmentMember',
   ],
 
   endpoints: () => ({}),

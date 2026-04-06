@@ -44,10 +44,13 @@ const ContactUs: React.FC = () => {
     site: 'JUPITER',
   });
 
-  const { data: contactInfoData, isLoading, isFetching } =
-    useGetContactInfoQuery(selectedSite, {
-      refetchOnMountOrArgChange: true,
-    });
+  const {
+    data: contactInfoData,
+    isLoading,
+    isFetching,
+  } = useGetContactInfoQuery(selectedSite, {
+    refetchOnMountOrArgChange: true,
+  });
   const [createContactInfo, { isLoading: isCreating }] =
     useCreateContactInfoMutation();
   const [updateContactInfo, { isLoading: isUpdating }] =

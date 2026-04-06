@@ -1,17 +1,21 @@
 import { cn } from '@/lib/utils';
 import { useGetAdminSettingsQuery } from '@/redux/features/adminSettingApis/adminSettingsApi';
+import { useGetProfileQuery } from '@/redux/features/auth/authApi';
 import { logout } from '@/redux/features/auth/authSlice';
+import { useAppSelector } from '@/redux/typeHook';
 // import { persistor } from "@/redux/store"
 import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HiX } from 'react-icons/hi';
 import { IoIosLogOut } from 'react-icons/io';
 import {
+  LuAnchor,
   LuChartColumn,
   LuClipboardList,
   LuFileText,
   LuLayoutDashboard,
   LuLayoutGrid,
+  LuMailCheck,
   LuSettings,
   LuShield,
   LuStar,
@@ -19,45 +23,62 @@ import {
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+// Each item declares which permission is required to see it.
+// null means it's always visible (e.g. SUPER_ADMIN bypass or public items).
 const navItems = [
   {
     label: 'Overview',
     path: '/',
     icon: <LuLayoutDashboard className="text-lg" />,
+    permission: 'dashboard:view',
   },
-
-
   {
     label: 'Yacht Leads',
     path: '/yacht-leads',
     icon: <LuClipboardList className="text-lg" />,
+    permission: 'leads:view',
   },
   {
     label: 'Featured & Homepage',
     path: '/featured',
     icon: <LuStar className="text-lg" />,
+    permission: 'featured_brand:manage',
+  },
+  {
+    label: 'Boats Inventory',
+    path: '/boats',
+    icon: <LuAnchor className="text-lg" />,
+    permission: 'boats:sync',
+  },
+  {
+    label: 'Dispatch Report',
+    path: '/dispatch-report',
+    icon: <LuMailCheck className="text-lg" />,
+    permission: 'leads:dispatch_report',
   },
   {
     label: 'Content Management',
     path: '/content',
     icon: <LuFileText className="text-lg" />,
+    permission: 'content:manage',
   },
-
-
   {
     label: 'Users & Permissions',
     path: '/users',
     icon: <LuShield className="text-lg" />,
+    permission: 'user:view',
   },
   {
     label: 'Analytics & Reports',
     path: '/analytics',
     icon: <LuChartColumn className="text-lg" />,
+    permission: 'dashboard:view',
   },
   {
     label: 'Settings',
     path: '/settings',
     icon: <LuSettings className="text-lg" />,
+    permission: 'settings:view',
   },
 ];
 
@@ -66,8 +87,19 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const { data: settings } = useGetAdminSettingsQuery();
+  const authUser = useAppSelector((state) => state.auth.user);
+  const { data: profile } = useGetProfileQuery(undefined, { skip: !authUser });
 
-  console.log(settings);
+  // profile (live fetch) takes precedence over the stored login snapshot
+  const user = profile ?? authUser;
+
+  const isSuperAdmin = user?.role === 'SUPER_ADMIN';
+  const userPermissions: string[] = user?.permissions ?? [];
+
+  const visibleNavItems = navItems.filter((item) => {
+    if (isSuperAdmin) return true;
+    return userPermissions.includes(item.permission);
+  });
 
   // Close mobile menu on window resize
   useEffect(() => {
@@ -152,7 +184,7 @@ const Navbar = () => {
           <img
             src={settings?.logoUrl || ''}
             className="h-8 sm:h-10"
-            alt="Florida Yacht Trader"
+            alt={settings?.siteName || ''}
           />
           <span className="text-sm sm:text-lg font-bold uppercase text-[#004DAC] leading-tight">
             {settings?.siteName}
@@ -162,7 +194,7 @@ const Navbar = () => {
         {/* Navigation Menu */}
         <nav className="flex-1 overflow-y-auto px-3 py-4">
           <ul className="space-y-2">
-            {navItems.map((item) => (
+            {visibleNavItems.map((item) => (
               <li key={item.label}>
                 <NavLink
                   to={item.path}

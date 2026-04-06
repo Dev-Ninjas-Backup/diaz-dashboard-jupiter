@@ -10,7 +10,10 @@ export const aboutUsApi = baseApi.injectEndpoints({
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ _id }: { _id: string }) => ({ type: 'Category' as const, id: _id })),
+              ...result.map(({ _id }: { _id: string }) => ({
+                type: 'Category' as const,
+                id: _id,
+              })),
               { type: 'Category', id: 'LIST' },
             ]
           : [{ type: 'Category', id: 'LIST' }],
@@ -31,7 +34,9 @@ export const aboutUsApi = baseApi.injectEndpoints({
         url: `/category/${categoryId}`,
         method: 'GET',
       }),
-      providesTags: (_result, _error, categoryId) => [{ type: 'Category', id: categoryId }],
+      providesTags: (_result, _error, categoryId) => [
+        { type: 'Category', id: categoryId },
+      ],
       keepUnusedDataFor: 0,
     }),
 
