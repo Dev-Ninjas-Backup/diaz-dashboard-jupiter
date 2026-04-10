@@ -1,10 +1,20 @@
 services:
   frontend:
     platform: linux/amd64
-    image: softvence/diaz_floridayt_admin:latest
-    container_name: floridayt_admin
-    environment:
-      - VITE_BASE_URL=https://development.floridayachttrader.com
-    ports:
-      - "4173:4173"
+    image: ${DOCKER_USERNAME}/${PACKAGE_NAME}:${PACKAGE_VERSION}
+    container_name: ${PACKAGE_NAME}
+    env_file:
+      - .env
+    expose:
+      - "4000"
     restart: always
+    networks:
+      - web
+
+networks:
+  web:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
