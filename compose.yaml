@@ -13,7 +13,8 @@ services:
 
 networks:
   web:
-    driver: bridge
+    name: jupiterm_web
+    external: true
 
 volumes:
   caddy_data:
