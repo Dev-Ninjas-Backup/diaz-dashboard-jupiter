@@ -13,4 +13,7 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(process.env.VITE_APP_VERSION ?? 'dev'),
   },
+  server: {
+    allowedHosts: ['admin.jupitermarinesales.com'],
+  },
 });
