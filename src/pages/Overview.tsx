@@ -2,6 +2,7 @@ import OverviewCards from '@/components/Overview/OverviewCards';
 import PerformanceOverview from '@/components/Overview/PerformanceOverview';
 import QuickActions from '@/components/Overview/QuickActions';
 import RecentActivity from '@/components/Overview/RecentActivity';
+import { useVisitorSocket } from '@/hooks/useVisitorSocket';
 import {
   useGetDashboardOverviewQuery,
   useGetPerformanceOverviewQuery,
@@ -12,19 +13,20 @@ const Overview = () => {
   const { data: dashboardData } = useGetDashboardOverviewQuery({});
   const { data: recentActivityData } = useGetRecentActivityQuery({});
   const { data: performanceOverviewData } = useGetPerformanceOverviewQuery({});
+  const { activeCount, stats } = useVisitorSocket();
+
   const cardsData = {
     totalYachts: dashboardData?.totalYachtsListed || 0,
     pendingApprovals: dashboardData?.totalPendingApprovals || 0,
-    verifiedSellers: dashboardData?.totalVerifiedSellers || 0,
-    featuredYachts: dashboardData?.featuredYachts || 0,
-    totalYatchPercentageChange:
-      dashboardData?.totalYachtsListedChangePercent || 0,
+    totalListingValue: performanceOverviewData?.totalListingValue || 0,
+    totalYatchPercentageChange: dashboardData?.totalYachtsListedChangePercent || 0,
+    activeNow: activeCount,
+    todayVisitors: stats.todayVisitors,
   };
 
-  console.log('Dashboard Data:', dashboardData); // For debugging purposes
   return (
-    <div className="flex flex-col h-full">
-      <h1 className="text-3xl font-semibold">Dashboard Overview</h1>
+    <div className="flex flex-col h-full p-4 md:p-6">
+      <h1 className="text-2xl md:text-3xl font-semibold">Dashboard Overview</h1>
       <p className="text-sm text-[#4A5565] mt-2">
         Welcome back! Here's what's happening today
       </p>
