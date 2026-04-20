@@ -90,7 +90,11 @@ const Settings: React.FC = () => {
         <General formData={formData} setFormData={setFormData} />
       )}
       {activeTab === 'branding' && (
-        <Branding formData={formData} setFormData={setFormData} />
+        <Branding
+          formData={formData}
+          setFormData={setFormData}
+          currentLogoUrl={data?.logoUrl}
+        />
       )}
       {activeTab === 'notifications' && (
         <Notifications formData={formData} setFormData={setFormData} />
