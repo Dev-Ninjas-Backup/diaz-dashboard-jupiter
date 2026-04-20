@@ -71,10 +71,15 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
     },
   );
 
-  // Team members who have an email and are not already assigned
-  const availableTeamMembers = (ourTeamData?.data ?? []).filter(
-    (m) => m.email && !existingEmails.includes(m.email) && m.isActive,
+  const activeTeamMembers = (ourTeamData?.data ?? []).filter(
+    (m) => m.isActive,
   );
+  // Team members who have an email and are not already assigned
+  const availableTeamMembers = activeTeamMembers.filter(
+    (m) => m.email && !existingEmails.includes(m.email),
+  );
+  // Team members without email (shown as disabled)
+  const noEmailTeamMembers = activeTeamMembers.filter((m) => !m.email);
 
   useEffect(() => {
     if (isOpen) {
@@ -125,7 +130,7 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
                 <div className="flex justify-center py-6">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600" />
                 </div>
-              ) : availableTeamMembers.length > 0 ? (
+              ) : availableTeamMembers.length > 0 || noEmailTeamMembers.length > 0 ? (
                 <div className="space-y-2 mb-4">
                   {availableTeamMembers.map((member) => (
                     <button
@@ -170,6 +175,43 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
                       </div>
                       <Check className="w-4 h-4 text-blue-400 shrink-0 opacity-0 group-hover:opacity-100" />
                     </button>
+                  ))}
+                  {noEmailTeamMembers.map((member) => (
+                    <div
+                      key={member.id}
+                      className="w-full flex items-center gap-3 p-3 rounded-lg border border-gray-100 bg-gray-50 opacity-60 cursor-not-allowed text-left"
+                      title="Add an email to this team member to assign them"
+                    >
+                      {member.image?.url ? (
+                        <img
+                          src={member.image.url}
+                          alt={member.name}
+                          className="w-10 h-10 rounded-full object-cover shrink-0"
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white text-sm font-semibold shrink-0">
+                          {member.name
+                            .split(' ')
+                            .map((n) => n[0])
+                            .join('')
+                            .toUpperCase()
+                            .slice(0, 2)}
+                        </div>
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm font-medium text-gray-700 truncate">
+                          {member.name}
+                        </p>
+                        <p className="text-xs text-orange-500 truncate">
+                          No email — add an email to enable
+                        </p>
+                        {member.designation && (
+                          <p className="text-xs text-gray-400 truncate">
+                            {member.designation}
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   ))}
                 </div>
               ) : (
