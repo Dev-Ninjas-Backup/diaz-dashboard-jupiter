@@ -51,6 +51,7 @@ interface AssignmentMemberModalProps {
   isLoading: boolean;
   initial?: AssignmentMember | null;
   existingEmails: string[];
+  nextOrder: number;
 }
 
 const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
@@ -60,8 +61,9 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
   isLoading,
   initial,
   existingEmails,
+  nextOrder,
 }) => {
-  const [form, setForm] = useState({ name: '', email: '', order: 0 });
+  const [form, setForm] = useState({ name: '', email: '', order: nextOrder });
   const [manualMode, setManualMode] = useState(false);
 
   const { data: ourTeamData, isLoading: isTeamLoading } = useGetOurTeamQuery(
@@ -86,12 +88,12 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
       setForm({
         name: initial?.name ?? '',
         email: initial?.email ?? '',
-        order: initial?.order ?? 0,
+        order: initial?.order ?? nextOrder,
       });
       // When editing, always go to manual mode (pre-filled)
       setManualMode(!!initial);
     }
-  }, [isOpen, initial]);
+  }, [isOpen, initial, nextOrder]);
 
   if (!isOpen) return null;
 
@@ -555,6 +557,7 @@ const AssignmentMembersTab: React.FC = () => {
         isLoading={isCreating || isUpdating}
         initial={editingMember}
         existingEmails={members.map((m) => m.email)}
+        nextOrder={members.length > 0 ? Math.max(...members.map((m) => m.order)) + 1 : 0}
       />
     </>
   );
