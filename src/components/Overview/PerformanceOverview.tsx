@@ -1,4 +1,4 @@
-import { LuTrendingUp, LuEye, LuDollarSign, LuUsers } from 'react-icons/lu';
+import { LuTrendingUp, LuEye, LuDollarSign } from 'react-icons/lu';
 
 interface PerformanceOverviewData {
   totalVisitors: number;
@@ -6,54 +6,59 @@ interface PerformanceOverviewData {
   totalListingValue: number;
 }
 
+const fmtNum = (n?: number) => (n ?? 0).toLocaleString();
+const fmtMoney = (n?: number) => {
+  if (!n) return '$0';
+  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `$${(n / 1_000).toFixed(1)}K`;
+  return `$${n.toLocaleString()}`;
+};
+
 const PerformanceOverview = ({
   performanceOverviewData,
 }: {
   performanceOverviewData?: PerformanceOverviewData;
 }) => {
-  const fmtNum = (n?: number) => (n ?? 0).toLocaleString();
-  const fmtMoney = (n?: number) => {
-    if (!n) return '$0';
-    if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
-    if (n >= 1000) return `$${(n / 1000).toFixed(1)}K`;
-    return `$${n.toLocaleString()}`;
-  };
-
   const items = [
     {
-      icon: <LuTrendingUp className="text-[#006EF0] text-3xl" />,
+      icon: <LuTrendingUp className="h-5 w-5 text-[#007B82]" />,
       value: fmtNum(performanceOverviewData?.totalVisitors),
-      label: 'Total Visitors (Month)',
+      label: 'Visitors This Month',
+      bg: 'bg-teal-50',
     },
     {
-      icon: <LuEye className="text-[#006EF0] text-3xl" />,
+      icon: <LuEye className="h-5 w-5 text-[#007B82]" />,
       value: fmtNum(performanceOverviewData?.totalPageViews),
-      label: 'Page Views (Month)',
+      label: 'Page Views This Month',
+      bg: 'bg-teal-50',
     },
     {
-      icon: <LuDollarSign className="text-[#006EF0] text-3xl" />,
+      icon: <LuDollarSign className="h-5 w-5 text-[#007B82]" />,
       value: fmtMoney(performanceOverviewData?.totalListingValue),
-      label: 'Total Listing Value',
-    },
-    {
-      icon: <LuUsers className="text-[#006EF0] text-3xl" />,
-      value: fmtNum(performanceOverviewData?.totalVisitors),
-      label: 'Monthly Sessions',
+      label: 'Total Active Listing Value',
+      bg: 'bg-teal-50',
     },
   ];
 
   return (
-    <div className="p-5 border border-gray-200 rounded-lg bg-white mt-5">
-      <h1 className="text-lg font-semibold">Performance Overview</h1>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5 my-5">
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mt-4">
+      <h2 className="text-sm font-semibold text-gray-900 mb-4">
+        Performance Overview
+        <span className="ml-2 text-xs font-normal text-gray-400">This month</span>
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {items.map((item) => (
           <div
             key={item.label}
-            className="flex flex-col text-center items-center justify-center gap-2 p-4 rounded-lg bg-[#EFF6FF]"
+            className={`${item.bg} rounded-lg p-4 flex items-center gap-4`}
           >
-            {item.icon}
-            <p className="text-xl font-semibold">{item.value}</p>
-            <p className="text-sm text-gray-600">{item.label}</p>
+            <div className="bg-white p-2 rounded-lg shadow-sm shrink-0">
+              {item.icon}
+            </div>
+            <div>
+              <p className="text-xl font-bold text-gray-900">{item.value}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{item.label}</p>
+            </div>
           </div>
         ))}
       </div>

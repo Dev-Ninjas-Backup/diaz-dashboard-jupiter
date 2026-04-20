@@ -11,61 +11,86 @@ interface OverviewCardsProps {
 }
 
 const fmt = (n: number) => {
-  if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
-  if (n >= 1000) return `$${(n / 1000).toFixed(1)}K`;
+  if (n >= 1_000_000) return `$${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `$${(n / 1_000).toFixed(1)}K`;
   return `$${n.toLocaleString()}`;
 };
 
-const cards = [
-  {
-    key: 'yachts',
-    label: 'Total Yachts Listed',
-    sub: (p: OverviewCardsProps) =>
-      `${p.totalYatchPercentageChange >= 0 ? '+' : ''}${p.totalYatchPercentageChange}% from last month`,
-    value: (p: OverviewCardsProps) => p.totalYachts.toLocaleString(),
-    icon: <LuShip className="h-7 w-7 text-white" />,
-    bg: 'bg-[#003235]',
-  },
-  {
-    key: 'pending',
-    label: 'Pending Approvals',
-    sub: () => 'Needs attention',
-    value: (p: OverviewCardsProps) => p.pendingApprovals.toLocaleString(),
-    icon: <MdOutlineDirectionsBoat className="h-7 w-7 text-white" />,
-    bg: 'bg-[#00555A]',
-  },
-  {
-    key: 'value',
-    label: 'Total Listing Value',
-    sub: () => 'Active listings',
-    value: (p: OverviewCardsProps) => fmt(p.totalListingValue),
-    icon: <LuDollarSign className="h-7 w-7 text-white" />,
-    bg: 'bg-[#007B82]',
-  },
-  {
-    key: 'active',
-    label: 'Active Now',
-    sub: (p: OverviewCardsProps) => `${p.todayVisitors} today`,
-    value: (p: OverviewCardsProps) => p.activeNow.toLocaleString(),
-    icon: <LuActivity className="h-7 w-7 text-white animate-pulse" />,
-    bg: 'bg-[#00A3AC]',
-  },
-];
+const TrendBadge = ({ pct }: { pct: number }) => (
+  <span
+    className={`inline-flex items-center gap-0.5 text-xs font-medium px-1.5 py-0.5 rounded-full ${
+      pct >= 0
+        ? 'bg-emerald-100 text-emerald-700'
+        : 'bg-red-100 text-red-600'
+    }`}
+  >
+    {pct >= 0 ? '↑' : '↓'} {Math.abs(pct)}%
+  </span>
+);
 
 const OverviewCards = ({ cardsData }: { cardsData: OverviewCardsProps }) => {
+  const cards = [
+    {
+      label: 'Total Yachts Listed',
+      value: cardsData.totalYachts.toLocaleString(),
+      sub: 'vs last month',
+      badge: <TrendBadge pct={cardsData.totalYatchPercentageChange} />,
+      icon: <LuShip className="h-6 w-6" />,
+      accent: 'bg-[#003235]',
+    },
+    {
+      label: 'Pending Approvals',
+      value: cardsData.pendingApprovals.toLocaleString(),
+      sub: 'Awaiting review',
+      badge: cardsData.pendingApprovals > 0 && (
+        <span className="text-xs font-medium px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700">
+          Action needed
+        </span>
+      ),
+      icon: <MdOutlineDirectionsBoat className="h-6 w-6" />,
+      accent: 'bg-[#00555A]',
+    },
+    {
+      label: 'Total Listing Value',
+      value: fmt(cardsData.totalListingValue),
+      sub: 'Active listings',
+      badge: null,
+      icon: <LuDollarSign className="h-6 w-6" />,
+      accent: 'bg-[#007B82]',
+    },
+    {
+      label: 'Active Visitors',
+      value: cardsData.activeNow.toLocaleString(),
+      sub: `${cardsData.todayVisitors} visits today`,
+      badge: (
+        <span className="flex items-center gap-1 text-xs font-medium px-1.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+          Live
+        </span>
+      ),
+      icon: <LuActivity className="h-6 w-6" />,
+      accent: 'bg-[#00A3AC]',
+    },
+  ];
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 py-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 py-6">
       {cards.map((card) => (
         <div
-          key={card.key}
-          className={`flex items-center gap-3 justify-between ${card.bg} text-white px-5 xl:px-3 2xl:px-6 py-4 rounded-lg`}
+          key={card.label}
+          className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex items-start gap-4"
         >
-          <div className="space-y-1">
-            <p className="text-xs opacity-80">{card.label}</p>
-            <h1 className="text-2xl font-semibold">{card.value(cardsData)}</h1>
-            <p className="text-xs opacity-70">{card.sub(cardsData)}</p>
+          <div className={`${card.accent} p-2.5 rounded-lg text-white shrink-0`}>
+            {card.icon}
           </div>
-          {card.icon}
+          <div className="min-w-0 flex-1">
+            <p className="text-xs text-gray-500 font-medium truncate">{card.label}</p>
+            <p className="text-2xl font-bold text-gray-900 mt-0.5">{card.value}</p>
+            <div className="flex items-center gap-2 mt-1.5">
+              {card.badge}
+              <span className="text-xs text-gray-400">{card.sub}</span>
+            </div>
+          </div>
         </div>
       ))}
     </div>
