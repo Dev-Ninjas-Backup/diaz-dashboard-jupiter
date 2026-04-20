@@ -7,7 +7,6 @@ import {
 import type {
   AssignmentMember,
   CreateAssignmentMemberPayload,
-  UpdateAssignmentMemberPayload,
 } from '@/redux/features/assignmentMembers/assignmentMembersApi';
 import {
   useCreateAssignmentMemberMutation,
@@ -38,10 +37,28 @@ import {
   Trash2,
   UserPlus,
   X,
+  GripVertical,
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core';
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+  arrayMove,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 /* ─── Assignment Member Modal ────────────────────────────── */
 interface AssignmentMemberModalProps {
@@ -73,9 +90,7 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
     },
   );
 
-  const activeTeamMembers = (ourTeamData?.data ?? []).filter(
-    (m) => m.isActive,
-  );
+  const activeTeamMembers = (ourTeamData?.data ?? []).filter((m) => m.isActive);
   // Team members who have an email and are not already assigned
   const availableTeamMembers = activeTeamMembers.filter(
     (m) => m.email && !existingEmails.includes(m.email),
@@ -115,7 +130,12 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
           <h2 className="text-lg font-semibold text-gray-900">
             {initial ? 'Edit Assignment Member' : 'Add Assignment Member'}
           </h2>
-          <button onClick={onClose} disabled={isLoading}>
+          <button
+            onClick={onClose}
+            disabled={isLoading}
+            title="Close"
+            aria-label="Close"
+          >
             <X className="w-5 h-5 text-gray-400 hover:text-gray-600" />
           </button>
         </div>
@@ -132,7 +152,8 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
                 <div className="flex justify-center py-6">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600" />
                 </div>
-              ) : availableTeamMembers.length > 0 || noEmailTeamMembers.length > 0 ? (
+              ) : availableTeamMembers.length > 0 ||
+                noEmailTeamMembers.length > 0 ? (
                 <div className="space-y-2 mb-4">
                   {availableTeamMembers.map((member) => (
                     <button
@@ -292,10 +313,14 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="member-order"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Notification Order <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="member-order"
                   type="number"
                   min={0}
                   value={form.order}
@@ -303,8 +328,8 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
                     setForm((p) => ({ ...p, order: Number(e.target.value) }))
                   }
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  disabled={isLoading}
+                  placeholder="0"
+                  title="Notification order (0 = first to receive)"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   0 = first to receive lead notification email
@@ -336,12 +361,123 @@ const AssignmentMemberModal: React.FC<AssignmentMemberModalProps> = ({
   );
 };
 
+/* ─── Sortable Row ───────────────────────────────────────── */
+const SortableRow: React.FC<{
+  member: AssignmentMember;
+  index: number;
+  onEdit: (m: AssignmentMember) => void;
+  onDelete: (m: AssignmentMember) => void;
+  onToggle: (m: AssignmentMember) => void;
+  isUpdating: boolean;
+  isDeleting: boolean;
+}> = ({
+  member,
+  index,
+  onEdit,
+  onDelete,
+  onToggle,
+  isUpdating,
+  isDeleting,
+}) => {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: member.id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+    zIndex: isDragging ? 10 : undefined,
+  };
+
+  return (
+    <tr
+      ref={setNodeRef}
+      style={style}
+      className={`hover:bg-gray-50 transition-colors ${isDragging ? 'bg-blue-50 shadow-lg' : ''}`}
+    >
+      <td className="px-3 py-4">
+        <button
+          {...attributes}
+          {...listeners}
+          className="cursor-grab active:cursor-grabbing p-1 text-gray-400 hover:text-gray-600 rounded"
+          title="Drag to reorder"
+        >
+          <GripVertical className="w-4 h-4" />
+        </button>
+      </td>
+      <td className="px-4 py-4">
+        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">
+          {index + 1}
+        </span>
+      </td>
+      <td className="px-4 py-4">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-semibold shrink-0">
+            {member.name
+              .split(' ')
+              .map((n) => n[0])
+              .join('')
+              .toUpperCase()
+              .slice(0, 2)}
+          </div>
+          <span className="text-sm font-medium text-gray-900">
+            {member.name}
+          </span>
+        </div>
+      </td>
+      <td className="px-4 py-4">
+        <span className="text-sm text-gray-600">{member.email}</span>
+      </td>
+      <td className="px-4 py-4">
+        <button
+          onClick={() => onToggle(member)}
+          disabled={isUpdating}
+          className={`px-2.5 py-1 text-xs font-medium rounded-full transition-colors ${
+            member.is_active
+              ? 'bg-green-100 text-green-700 hover:bg-green-200'
+              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+          }`}
+        >
+          {member.is_active ? 'Active' : 'Inactive'}
+        </button>
+      </td>
+      <td className="px-4 py-4">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => onEdit(member)}
+            className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
+            title="Edit"
+          >
+            <Pencil className="w-4 h-4" />
+          </button>
+          <button
+            onClick={() => onDelete(member)}
+            disabled={isDeleting}
+            className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
+            title="Delete"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
+        </div>
+      </td>
+    </tr>
+  );
+};
+
 /* ─── Assignment Members Tab ─────────────────────────────── */
 const AssignmentMembersTab: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingMember, setEditingMember] = useState<AssignmentMember | null>(
     null,
   );
+  const [localMembers, setLocalMembers] = useState<AssignmentMember[]>([]);
+  const [isSavingOrder, setIsSavingOrder] = useState(false);
 
   const {
     data: members = [],
@@ -355,11 +491,59 @@ const AssignmentMembersTab: React.FC = () => {
   const [deleteMember, { isLoading: isDeleting }] =
     useDeleteAssignmentMemberMutation();
 
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  useEffect(() => {
+    setLocalMembers([...members].sort((a, b) => a.order - b.order));
+  }, [members]);
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = localMembers.findIndex((m) => m.id === active.id);
+    const newIndex = localMembers.findIndex((m) => m.id === over.id);
+    const reordered = arrayMove(localMembers, oldIndex, newIndex);
+    setLocalMembers(reordered);
+
+    // Save new order to backend
+    setIsSavingOrder(true);
+    try {
+      // Step 1: Set all orders to large temporary values to avoid unique conflicts
+      const offset = 10000;
+      await Promise.all(
+        reordered.map((member, index) =>
+          updateMember({
+            id: member.id,
+            data: { order: offset + index },
+          }).unwrap(),
+        ),
+      );
+      // Step 2: Set final order values sequentially
+      for (let i = 0; i < reordered.length; i++) {
+        await updateMember({
+          id: reordered[i].id,
+          data: { order: i },
+        }).unwrap();
+      }
+      toast.success('Order saved');
+    } catch {
+      toast.error('Failed to save order');
+      setLocalMembers([...members].sort((a, b) => a.order - b.order));
+    } finally {
+      setIsSavingOrder(false);
+    }
+  };
+
   const openAdd = () => {
     setEditingMember(null);
     setIsModalOpen(true);
   };
-
   const openEdit = (member: AssignmentMember) => {
     setEditingMember(member);
     setIsModalOpen(true);
@@ -368,12 +552,10 @@ const AssignmentMembersTab: React.FC = () => {
   const handleSubmit = async (data: CreateAssignmentMemberPayload) => {
     try {
       if (editingMember) {
-        const payload: UpdateAssignmentMemberPayload = {
-          name: data.name,
-          email: data.email,
-          order: data.order,
-        };
-        await updateMember({ id: editingMember.id, data: payload }).unwrap();
+        await updateMember({
+          id: editingMember.id,
+          data: { name: data.name, email: data.email, order: data.order },
+        }).unwrap();
         toast.success('Member updated successfully');
       } else {
         await createMember(data).unwrap();
@@ -420,21 +602,19 @@ const AssignmentMembersTab: React.FC = () => {
     }
   };
 
-  if (isLoading) {
+  if (isLoading)
     return (
       <div className="flex items-center justify-center h-48">
         <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
       </div>
     );
-  }
 
-  if (isError) {
+  if (isError)
     return (
       <div className="bg-red-50 border border-red-200 rounded-lg p-4">
         <p className="text-red-800">Error loading assignment members.</p>
       </div>
     );
-  }
 
   return (
     <>
@@ -445,21 +625,28 @@ const AssignmentMembersTab: React.FC = () => {
               Lead Assignment Members
             </h2>
             <p className="text-sm text-gray-500 mt-0.5">
-              Members who receive lead notification emails, in order
+              Drag rows to reorder notification priority
             </p>
           </div>
-          <button
-            onClick={openAdd}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors w-full sm:w-auto justify-center"
-          >
-            <Plus className="w-4 h-4" />
-            Add Member
-          </button>
+          <div className="flex items-center gap-3">
+            {isSavingOrder && (
+              <span className="text-xs text-blue-600 flex items-center gap-1">
+                <div className="animate-spin rounded-full h-3 w-3 border-b-2 border-blue-600" />
+                Saving order...
+              </span>
+            )}
+            <button
+              onClick={openAdd}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Add Member
+            </button>
+          </div>
         </div>
 
-        {/* Table */}
         <div className="overflow-x-auto">
-          {members.length === 0 ? (
+          {localMembers.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
               No assignment members found
             </div>
@@ -467,84 +654,43 @@ const AssignmentMembersTab: React.FC = () => {
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
-                  {['Order', 'Name', 'Email', 'Status', 'Actions'].map((h) => (
-                    <th
-                      key={h}
-                      className="text-left px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      {h}
-                    </th>
-                  ))}
+                  {['', 'Order', 'Name', 'Email', 'Status', 'Actions'].map(
+                    (h) => (
+                      <th
+                        key={h}
+                        className="text-left px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        {h}
+                      </th>
+                    ),
+                  )}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200">
-                {[...members]
-                  .sort((a, b) => a.order - b.order)
-                  .map((member) => (
-                    <tr
-                      key={member.id}
-                      className="hover:bg-gray-50 transition-colors"
-                    >
-                      <td className="px-6 py-4">
-                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">
-                          {member.order}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-semibold shrink-0">
-                            {member.name
-                              .split(' ')
-                              .map((n) => n[0])
-                              .join('')
-                              .toUpperCase()
-                              .slice(0, 2)}
-                          </div>
-                          <span className="text-sm font-medium text-gray-900">
-                            {member.name}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="text-sm text-gray-600">
-                          {member.email}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <button
-                          onClick={() => handleToggleActive(member)}
-                          disabled={isUpdating}
-                          className={`px-2.5 py-1 text-xs font-medium rounded-full transition-colors ${
-                            member.is_active
-                              ? 'bg-green-100 text-green-700 hover:bg-green-200'
-                              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                          }`}
-                        >
-                          {member.is_active ? 'Active' : 'Inactive'}
-                        </button>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => openEdit(member)}
-                            className="p-1.5 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded transition-colors"
-                            title="Edit"
-                          >
-                            <Pencil className="w-4 h-4" />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(member)}
-                            disabled={isDeleting}
-                            className="p-1.5 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded transition-colors"
-                            title="Delete"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-              </tbody>
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext
+                  items={localMembers.map((m) => m.id)}
+                  strategy={verticalListSortingStrategy}
+                >
+                  <tbody className="divide-y divide-gray-200">
+                    {localMembers.map((member, index) => (
+                      <SortableRow
+                        key={member.id}
+                        member={member}
+                        index={index}
+                        onEdit={openEdit}
+                        onDelete={handleDelete}
+                        onToggle={handleToggleActive}
+                        isUpdating={isUpdating}
+                        isDeleting={isDeleting}
+                      />
+                    ))}
+                  </tbody>
+                </SortableContext>
+              </DndContext>
             </table>
           )}
         </div>
@@ -557,7 +703,9 @@ const AssignmentMembersTab: React.FC = () => {
         isLoading={isCreating || isUpdating}
         initial={editingMember}
         existingEmails={members.map((m) => m.email)}
-        nextOrder={members.length > 0 ? Math.max(...members.map((m) => m.order)) + 1 : 0}
+        nextOrder={
+          members.length > 0 ? Math.max(...members.map((m) => m.order)) + 1 : 0
+        }
       />
     </>
   );
@@ -781,6 +929,8 @@ const AdminUsersTab: React.FC = () => {
                           openDropdownId === user.id ? null : user.id,
                         )
                       }
+                      aria-label={`Options for ${user.name}`}
+                      title={`Options for ${user.name}`}
                       className="dropdown-button p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                     >
                       <MoreVertical className="w-5 h-5" />
