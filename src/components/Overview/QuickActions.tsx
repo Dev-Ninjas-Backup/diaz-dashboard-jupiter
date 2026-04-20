@@ -2,7 +2,7 @@ import {
   LuShip,
   LuStar,
   LuUsers,
-  LuBarChart,
+  LuChartBar,
   LuMailCheck,
   LuCircleCheck,
   LuCircle,
@@ -13,7 +13,7 @@ const actions = [
   { label: 'Review Pending Listings', icon: LuShip, path: '/boats' },
   { label: 'Manage Yacht Leads', icon: LuMailCheck, path: '/yacht-leads' },
   { label: 'Featured Yachts', icon: LuStar, path: '/featured' },
-  { label: 'Analytics & Reports', icon: LuBarChart, path: '/analytics' },
+  { label: 'Analytics & Reports', icon: LuChartBar, path: '/analytics' },
   { label: 'Users & Permissions', icon: LuUsers, path: '/users' },
 ];
 

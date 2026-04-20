@@ -1,17 +1,17 @@
 import { baseApi } from '@/redux/api/baseApi';
 
 export interface TopViewedBoat {
-  id: string;
+  listingId: string;
+  source: 'boats-com' | 'yachtbroker';
   name: string;
-  price: number;
-  buildYear: number;
-  make: string;
-  model: string;
-  city: string;
-  state: string;
-  status: string;
-  pageViewCount: number;
-  images: { file: { url: string } }[];
+  make: string | null;
+  model: string | null;
+  buildYear: number | null;
+  price: number | null;
+  city: string | null;
+  state: string | null;
+  imageUrl: string | null;
+  viewCount: number;
 }
 
 const dashboardOverviewApi = baseApi.injectEndpoints({
