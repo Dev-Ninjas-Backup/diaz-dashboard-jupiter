@@ -10,6 +10,13 @@ import {
   useGetRecentActivityQuery,
 } from '@/redux/features/overview/dashboardOverview';
 
+const today = new Date().toLocaleDateString('en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
 const Overview = () => {
   const { data: dashboardData } = useGetDashboardOverviewQuery({});
   const { data: recentActivityData } = useGetRecentActivityQuery({});
@@ -20,23 +27,35 @@ const Overview = () => {
     totalYachts: dashboardData?.totalYachtsListed || 0,
     pendingApprovals: dashboardData?.totalPendingApprovals || 0,
     totalListingValue: performanceOverviewData?.totalListingValue || 0,
-    totalYatchPercentageChange: dashboardData?.totalYachtsListedChangePercent || 0,
+    totalYatchPercentageChange:
+      dashboardData?.totalYachtsListedChangePercent || 0,
     activeNow: activeCount,
     todayVisitors: stats.todayVisitors,
   };
 
   return (
-    <div className="flex flex-col h-full p-4 md:p-6">
-      <h1 className="text-2xl md:text-3xl font-semibold">Dashboard Overview</h1>
-      <p className="text-sm text-[#4A5565] mt-2">
-        Welcome back! Here's what's happening today
-      </p>
+    <div className="min-h-full bg-gray-50 p-4 md:p-6 space-y-0">
+      {/* Header */}
+      <div className="mb-1">
+        <h1 className="text-2xl font-bold text-gray-900">Dashboard Overview</h1>
+        <p className="text-sm text-gray-400 mt-0.5">{today}</p>
+      </div>
+
+      {/* KPI Cards */}
       <OverviewCards cardsData={cardsData} />
-      <div className="flex flex-col items-center md:flex-row md:items-stretch gap-5 flex-1 min-h-0">
-        <RecentActivity recentActivityData={recentActivityData} />
+
+      {/* Middle row: Recent Activity + Quick Actions */}
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="flex-1 min-w-0">
+          <RecentActivity recentActivityData={recentActivityData} />
+        </div>
         <QuickActions />
       </div>
+
+      {/* Performance strip */}
       <PerformanceOverview performanceOverviewData={performanceOverviewData} />
+
+      {/* Top viewed yachts */}
       <TopViewedYachts socketStats={stats} />
     </div>
   );
