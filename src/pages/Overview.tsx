@@ -2,6 +2,7 @@ import OverviewCards from '@/components/Overview/OverviewCards';
 import PerformanceOverview from '@/components/Overview/PerformanceOverview';
 import QuickActions from '@/components/Overview/QuickActions';
 import RecentActivity from '@/components/Overview/RecentActivity';
+import TopViewedYachts from '@/components/Overview/TopViewedYachts';
 import { useVisitorSocket } from '@/hooks/useVisitorSocket';
 import {
   useGetDashboardOverviewQuery,
@@ -36,6 +37,7 @@ const Overview = () => {
         <QuickActions />
       </div>
       <PerformanceOverview performanceOverviewData={performanceOverviewData} />
+      <TopViewedYachts socketStats={stats} />
     </div>
   );
 };
