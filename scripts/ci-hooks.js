@@ -3,7 +3,6 @@ import { emojify as emoji } from 'node-emoji';
 import { execSync } from 'node:child_process';
 import { default as yoctoSpinner } from 'yocto-spinner';
 
-// Helper function to run shell commands and return the output
 function runCommand(command) {
   try {
     console.log(chalk.blue(`\nRunning command: ${command}\n`));
