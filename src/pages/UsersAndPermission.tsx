@@ -471,6 +471,8 @@ const SortableRow: React.FC<{
 };
 
 /* ─── Assignment Members Tab ─────────────────────────────── */
+const EMPTY_MEMBERS: AssignmentMember[] = [];
+
 const AssignmentMembersTab: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingMember, setEditingMember] = useState<AssignmentMember | null>(
@@ -480,7 +482,7 @@ const AssignmentMembersTab: React.FC = () => {
   const [isSavingOrder, setIsSavingOrder] = useState(false);
 
   const {
-    data: members = [],
+    data: members = EMPTY_MEMBERS,
     isLoading,
     isError,
   } = useGetAssignmentMembersQuery();

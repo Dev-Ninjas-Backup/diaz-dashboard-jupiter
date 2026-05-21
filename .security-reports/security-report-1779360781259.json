@@ -1,0 +1,304 @@
+{
+  "timestamp": "2026-05-21T10:53:01.258Z",
+  "passed": true,
+  "secrets": [],
+  "vulnerabilities": {
+    "total": 15,
+    "critical": 0,
+    "high": 8,
+    "moderate": 6,
+    "low": 1,
+    "info": 0,
+    "packages": [
+      {
+        "name": "ajv",
+        "severity": "moderate",
+        "via": [
+          "ajv has ReDoS when using `$data` option"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "brace-expansion",
+        "severity": "moderate",
+        "via": [
+          "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
+          "brace-expansion: Zero-step sequence causes process hang and memory exhaustion"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "engine.io-client",
+        "severity": "moderate",
+        "via": [
+          "ws"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "flatted",
+        "severity": "high",
+        "via": [
+          "flatted vulnerable to unbounded recursion DoS in parse() revive phase",
+          "Prototype Pollution via parse() in NodeJS flatted"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "lodash-es",
+        "severity": "high",
+        "via": [
+          "Lodash has Prototype Pollution Vulnerability in `_.unset` and `_.omit` functions",
+          "lodash vulnerable to Code Injection via `_.template` imports key names",
+          "lodash vulnerable to Prototype Pollution via array path bypass in `_.unset` and `_.omit`"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "minimatch",
+        "severity": "high",
+        "via": [
+          "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+          "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+          "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+          "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+          "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
+          "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "picomatch",
+        "severity": "high",
+        "via": [
+          "Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching",
+          "Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching",
+          "Picomatch has a ReDoS vulnerability via extglob quantifiers",
+          "Picomatch has a ReDoS vulnerability via extglob quantifiers"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "postcss",
+        "severity": "moderate",
+        "via": [
+          "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "quill",
+        "severity": "low",
+        "via": [
+          "Quill is vulnerable to XSS via HTML export feature"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "react-router",
+        "severity": "high",
+        "via": [
+          "React Router has CSRF issue in Action/Server Action Request Processing",
+          "React Router vulnerable to XSS via Open Redirects",
+          "React Router SSR XSS in ScrollRestoration",
+          "React Router has unexpected external redirect via untrusted paths"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "react-router-dom",
+        "severity": "moderate",
+        "via": [
+          "react-router"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "rollup",
+        "severity": "high",
+        "via": [
+          "Rollup 4 has Arbitrary File Write via Path Traversal"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "socket.io-parser",
+        "severity": "high",
+        "via": [
+          "socket.io allows an unbounded number of binary attachments"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "vite",
+        "severity": "high",
+        "via": [
+          "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+          "Vite: `server.fs.deny` bypassed with queries",
+          "Vite Vulnerable to Arbitrary File Read via Vite Dev Server WebSocket"
+        ],
+        "fixAvailable": true
+      },
+      {
+        "name": "ws",
+        "severity": "moderate",
+        "via": [
+          "ws: Uninitialized memory disclosure"
+        ],
+        "fixAvailable": true
+      }
+    ],
+    "languages": [
+      {
+        "language": "Node.js",
+        "icon": "🟢",
+        "detected": true,
+        "toolAvailable": true,
+        "total": 15,
+        "critical": 0,
+        "high": 8,
+        "moderate": 6,
+        "low": 1,
+        "packages": [
+          {
+            "name": "ajv",
+            "severity": "moderate",
+            "via": [
+              "ajv has ReDoS when using `$data` option"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "brace-expansion",
+            "severity": "moderate",
+            "via": [
+              "brace-expansion: Zero-step sequence causes process hang and memory exhaustion",
+              "brace-expansion: Zero-step sequence causes process hang and memory exhaustion"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "engine.io-client",
+            "severity": "moderate",
+            "via": [
+              "ws"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "flatted",
+            "severity": "high",
+            "via": [
+              "flatted vulnerable to unbounded recursion DoS in parse() revive phase",
+              "Prototype Pollution via parse() in NodeJS flatted"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "lodash-es",
+            "severity": "high",
+            "via": [
+              "Lodash has Prototype Pollution Vulnerability in `_.unset` and `_.omit` functions",
+              "lodash vulnerable to Code Injection via `_.template` imports key names",
+              "lodash vulnerable to Prototype Pollution via array path bypass in `_.unset` and `_.omit`"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "minimatch",
+            "severity": "high",
+            "via": [
+              "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+              "minimatch has a ReDoS via repeated wildcards with non-matching literal in pattern",
+              "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+              "minimatch has ReDoS: matchOne() combinatorial backtracking via multiple non-adjacent GLOBSTAR segments",
+              "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions",
+              "minimatch ReDoS: nested *() extglobs generate catastrophically backtracking regular expressions"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "picomatch",
+            "severity": "high",
+            "via": [
+              "Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching",
+              "Picomatch: Method Injection in POSIX Character Classes causes incorrect Glob Matching",
+              "Picomatch has a ReDoS vulnerability via extglob quantifiers",
+              "Picomatch has a ReDoS vulnerability via extglob quantifiers"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "postcss",
+            "severity": "moderate",
+            "via": [
+              "PostCSS has XSS via Unescaped </style> in its CSS Stringify Output"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "quill",
+            "severity": "low",
+            "via": [
+              "Quill is vulnerable to XSS via HTML export feature"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "react-router",
+            "severity": "high",
+            "via": [
+              "React Router has CSRF issue in Action/Server Action Request Processing",
+              "React Router vulnerable to XSS via Open Redirects",
+              "React Router SSR XSS in ScrollRestoration",
+              "React Router has unexpected external redirect via untrusted paths"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "react-router-dom",
+            "severity": "moderate",
+            "via": [
+              "react-router"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "rollup",
+            "severity": "high",
+            "via": [
+              "Rollup 4 has Arbitrary File Write via Path Traversal"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "socket.io-parser",
+            "severity": "high",
+            "via": [
+              "socket.io allows an unbounded number of binary attachments"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "vite",
+            "severity": "high",
+            "via": [
+              "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+              "Vite: `server.fs.deny` bypassed with queries",
+              "Vite Vulnerable to Arbitrary File Read via Vite Dev Server WebSocket"
+            ],
+            "fixAvailable": true
+          },
+          {
+            "name": "ws",
+            "severity": "moderate",
+            "via": [
+              "ws: Uninitialized memory disclosure"
+            ],
+            "fixAvailable": true
+          }
+        ]
+      }
+    ]
+  }
+}
