@@ -58,6 +58,7 @@ export const baseApi = createApi({
     'Notification',
     'PageBanner',
     'AssignmentMember',
+    'AiSearchBanner',
   ],
 
   endpoints: () => ({}),

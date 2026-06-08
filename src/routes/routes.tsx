@@ -12,6 +12,7 @@ import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import TermsOfService from '@/pages/TermsOfService';
 import UpdateBlogPost from '@/pages/UpdateBlogPost';
 import WhyUs from '@/pages/WhyUs';
+import AiSearchBannerManagement from '@/pages/AiSearchBannerManagement';
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import AnalyticsAndReports from '../pages/AnalyticsAndReports';
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
           { path: 'content/our-team', element: <OurTeam /> },
           { path: 'content/featured-brands', element: <FeaturedBrands /> },
           { path: 'content/category', element: <CategoryManagement /> },
+          {
+            path: 'content/ai-search-banner',
+            element: <AiSearchBannerManagement />,
+          },
           { path: 'boats', element: <BoatsInventory /> },
           { path: 'dispatch-report', element: <DispatchReport /> },
           { path: 'users', element: <UsersAndPermission /> },
