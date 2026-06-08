@@ -13,9 +13,7 @@
       {
         "name": "ajv",
         "severity": "moderate",
-        "via": [
-          "ajv has ReDoS when using `$data` option"
-        ],
+        "via": ["ajv has ReDoS when using `$data` option"],
         "fixAvailable": true
       },
       {
@@ -30,9 +28,7 @@
       {
         "name": "engine.io-client",
         "severity": "moderate",
-        "via": [
-          "ws"
-        ],
+        "via": ["ws"],
         "fixAvailable": true
       },
       {
@@ -89,9 +85,7 @@
       {
         "name": "quill",
         "severity": "low",
-        "via": [
-          "Quill is vulnerable to XSS via HTML export feature"
-        ],
+        "via": ["Quill is vulnerable to XSS via HTML export feature"],
         "fixAvailable": true
       },
       {
@@ -108,25 +102,19 @@
       {
         "name": "react-router-dom",
         "severity": "moderate",
-        "via": [
-          "react-router"
-        ],
+        "via": ["react-router"],
         "fixAvailable": true
       },
       {
         "name": "rollup",
         "severity": "high",
-        "via": [
-          "Rollup 4 has Arbitrary File Write via Path Traversal"
-        ],
+        "via": ["Rollup 4 has Arbitrary File Write via Path Traversal"],
         "fixAvailable": true
       },
       {
         "name": "socket.io-parser",
         "severity": "high",
-        "via": [
-          "socket.io allows an unbounded number of binary attachments"
-        ],
+        "via": ["socket.io allows an unbounded number of binary attachments"],
         "fixAvailable": true
       },
       {
@@ -142,9 +130,7 @@
       {
         "name": "ws",
         "severity": "moderate",
-        "via": [
-          "ws: Uninitialized memory disclosure"
-        ],
+        "via": ["ws: Uninitialized memory disclosure"],
         "fixAvailable": true
       }
     ],
@@ -163,9 +149,7 @@
           {
             "name": "ajv",
             "severity": "moderate",
-            "via": [
-              "ajv has ReDoS when using `$data` option"
-            ],
+            "via": ["ajv has ReDoS when using `$data` option"],
             "fixAvailable": true
           },
           {
@@ -180,9 +164,7 @@
           {
             "name": "engine.io-client",
             "severity": "moderate",
-            "via": [
-              "ws"
-            ],
+            "via": ["ws"],
             "fixAvailable": true
           },
           {
@@ -239,9 +221,7 @@
           {
             "name": "quill",
             "severity": "low",
-            "via": [
-              "Quill is vulnerable to XSS via HTML export feature"
-            ],
+            "via": ["Quill is vulnerable to XSS via HTML export feature"],
             "fixAvailable": true
           },
           {
@@ -258,17 +238,13 @@
           {
             "name": "react-router-dom",
             "severity": "moderate",
-            "via": [
-              "react-router"
-            ],
+            "via": ["react-router"],
             "fixAvailable": true
           },
           {
             "name": "rollup",
             "severity": "high",
-            "via": [
-              "Rollup 4 has Arbitrary File Write via Path Traversal"
-            ],
+            "via": ["Rollup 4 has Arbitrary File Write via Path Traversal"],
             "fixAvailable": true
           },
           {
@@ -292,9 +268,7 @@
           {
             "name": "ws",
             "severity": "moderate",
-            "via": [
-              "ws: Uninitialized memory disclosure"
-            ],
+            "via": ["ws: Uninitialized memory disclosure"],
             "fixAvailable": true
           }
         ]

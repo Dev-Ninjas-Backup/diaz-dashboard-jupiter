@@ -29,7 +29,9 @@ const QuickActions = () => {
   return (
     <div className="w-full md:w-80 shrink-0 bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex flex-col gap-5">
       <div>
-        <h2 className="text-sm font-semibold text-gray-900 mb-3">Quick Actions</h2>
+        <h2 className="text-sm font-semibold text-gray-900 mb-3">
+          Quick Actions
+        </h2>
         <ul className="space-y-1.5">
           {actions.map(({ label, icon: Icon, path }) => (
             <li key={path}>
@@ -46,10 +48,15 @@ const QuickActions = () => {
       </div>
 
       <div className="border-t border-gray-100 pt-4">
-        <h2 className="text-sm font-semibold text-gray-900 mb-3">System Status</h2>
+        <h2 className="text-sm font-semibold text-gray-900 mb-3">
+          System Status
+        </h2>
         <ul className="space-y-2.5">
           {systemStatus.map(({ label, status, ok }) => (
-            <li key={label} className="flex items-center justify-between text-sm">
+            <li
+              key={label}
+              className="flex items-center justify-between text-sm"
+            >
               <span className="flex items-center gap-2 text-gray-500">
                 {ok ? (
                   <LuCircleCheck className="h-3.5 w-3.5 text-emerald-500" />

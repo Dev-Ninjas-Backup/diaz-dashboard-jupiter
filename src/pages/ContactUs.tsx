@@ -155,13 +155,10 @@ const ContactUs: React.FC = () => {
     setFormData((prev) => ({ ...prev, workingHours: updatedHours }));
   };
 
-  const handleSocialMediaChange = (
-    platform: keyof SocialMedia,
-    value: string,
-  ) => {
+  const handleSocialMediaChange = (updatedSocialMedia: SocialMedia) => {
     setFormData((prev) => ({
       ...prev,
-      socialMedia: { ...prev.socialMedia, [platform]: value },
+      socialMedia: updatedSocialMedia,
     }));
   };
 
@@ -297,6 +294,7 @@ const ContactUs: React.FC = () => {
               />
 
               <SocialMediaSection
+                key={formData.site}
                 socialMedia={formData.socialMedia}
                 onChange={handleSocialMediaChange}
               />

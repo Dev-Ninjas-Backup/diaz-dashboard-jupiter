@@ -10,12 +10,7 @@ export interface WorkingHour {
   hours: string;
 }
 
-export interface SocialMedia {
-  twitter?: string;
-  youtube?: string;
-  facebook?: string;
-  linkedin?: string;
-}
+export type SocialMedia = Record<string, string>;
 
 export interface ContactInfoFormData {
   address: string;

@@ -26,20 +26,28 @@ const AiSearchBannerManagement: React.FC = () => {
     existingImageUrl: '',
   });
 
-  const { data: bannerResponse, isLoading, refetch } = useGetAiSearchBannerQuery(undefined, {
+  const {
+    data: bannerResponse,
+    isLoading,
+    refetch,
+  } = useGetAiSearchBannerQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 
-  const [createBanner, { isLoading: isCreating }] = useCreateAiSearchBannerMutation();
-  const [updateBanner, { isLoading: isUpdating }] = useUpdateAiSearchBannerMutation();
-  const [deleteBanner, { isLoading: isDeleting }] = useDeleteAiSearchBannerMutation();
+  const [createBanner, { isLoading: isCreating }] =
+    useCreateAiSearchBannerMutation();
+  const [updateBanner, { isLoading: isUpdating }] =
+    useUpdateAiSearchBannerMutation();
+  const [deleteBanner, { isLoading: isDeleting }] =
+    useDeleteAiSearchBannerMutation();
 
   const isSaving = isCreating || isUpdating;
 
   // Extract banner object from NestJS Response { message, data: [...] }
-  const existingBanner = bannerResponse?.data && bannerResponse.data.length > 0
-    ? bannerResponse.data[0]
-    : null;
+  const existingBanner =
+    bannerResponse?.data && bannerResponse.data.length > 0
+      ? bannerResponse.data[0]
+      : null;
 
   useEffect(() => {
     if (existingBanner) {
@@ -249,7 +257,8 @@ const AiSearchBannerManagement: React.FC = () => {
                     {formData.bannerTitle || 'Where Luxury Meets Reliability'}
                   </h1>
                   <p className="text-xs sm:text-sm md:text-lg max-w-xl text-gray-200">
-                    {formData.subtitle || 'Showcasing the finest yachts from our trusted network.'}
+                    {formData.subtitle ||
+                      'Showcasing the finest yachts from our trusted network.'}
                   </p>
                   <button className="mt-2 px-6 sm:px-8 py-2 md:py-2.5 rounded-2xl bg-black text-xs sm:text-sm font-semibold text-white hover:bg-gray-950 transition-colors border border-gray-700 shadow-lg">
                     Start AI Search
@@ -265,7 +274,10 @@ const AiSearchBannerManagement: React.FC = () => {
               {/* Text Fields */}
               <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 space-y-6">
                 <div>
-                  <label htmlFor="bannerTitle" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="bannerTitle"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Banner Title *
                   </label>
                   <input
@@ -281,7 +293,10 @@ const AiSearchBannerManagement: React.FC = () => {
                 </div>
 
                 <div>
-                  <label htmlFor="subtitle" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label
+                    htmlFor="subtitle"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  >
                     Subtitle
                   </label>
                   <textarea
@@ -360,7 +375,11 @@ const AiSearchBannerManagement: React.FC = () => {
                   {existingBanner?.updatedAt && (
                     <div className="flex justify-between">
                       <span className="font-medium">Last Updated:</span>
-                      <span>{new Date(existingBanner.updatedAt).toLocaleDateString()}</span>
+                      <span>
+                        {new Date(
+                          existingBanner.updatedAt,
+                        ).toLocaleDateString()}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -372,7 +391,8 @@ const AiSearchBannerManagement: React.FC = () => {
                     Danger Zone
                   </h4>
                   <p className="text-xs text-red-700">
-                    Permanently delete this banner. The website will revert to default text placeholders.
+                    Permanently delete this banner. The website will revert to
+                    default text placeholders.
                   </p>
                   <button
                     onClick={handleDelete}
