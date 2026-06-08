@@ -92,3 +92,11 @@ export {
   useGetSingleCategoryQuery,
   useUpdateCategoryMutation,
 } from './category';
+
+// AI Search Banner
+export {
+  useGetAiSearchBannerQuery,
+  useCreateAiSearchBannerMutation,
+  useUpdateAiSearchBannerMutation,
+  useDeleteAiSearchBannerMutation,
+} from './aiSearchBanner';
