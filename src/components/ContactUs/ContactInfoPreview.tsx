@@ -7,9 +7,32 @@ import {
   Phone,
   Twitter,
   Youtube,
+  Instagram,
+  Link as LinkIcon,
 } from 'lucide-react';
 import React from 'react';
 import { type ContactInfoFormData } from './types';
+
+const getSocialIcon = (platform: string) => {
+  const p = platform.toLowerCase();
+  if (p.includes('facebook')) return <Facebook className="w-5 h-5" />;
+  if (p.includes('linkedin')) return <Linkedin className="w-5 h-5" />;
+  if (p.includes('twitter') || p === 'x')
+    return <Twitter className="w-5 h-5" />;
+  if (p.includes('youtube')) return <Youtube className="w-5 h-5" />;
+  if (p.includes('instagram')) return <Instagram className="w-5 h-5" />;
+  return <LinkIcon className="w-5 h-5" />;
+};
+
+const getSocialBgColor = (platform: string) => {
+  const p = platform.toLowerCase();
+  if (p.includes('facebook')) return 'bg-blue-600 hover:bg-blue-700';
+  if (p.includes('linkedin')) return 'bg-blue-700 hover:bg-blue-800';
+  if (p.includes('twitter') || p === 'x') return 'bg-sky-500 hover:bg-sky-600';
+  if (p.includes('youtube')) return 'bg-red-600 hover:bg-red-700';
+  if (p.includes('instagram')) return 'bg-pink-600 hover:bg-pink-700';
+  return 'bg-gray-600 hover:bg-gray-700';
+};
 
 interface ContactInfoPreviewProps {
   formData: ContactInfoFormData;
@@ -86,52 +109,26 @@ const ContactInfoPreview: React.FC<ContactInfoPreviewProps> = ({
               </div>
             )}
 
-            {(formData.socialMedia.facebook ||
-              formData.socialMedia.twitter ||
-              formData.socialMedia.linkedin ||
-              formData.socialMedia.youtube) && (
+            {Object.values(formData.socialMedia).some(Boolean) && (
               <div>
                 <h3 className="font-semibold text-gray-900 mb-3">Follow Us</h3>
-                <div className="flex gap-3">
-                  {formData.socialMedia.facebook && (
-                    <a
-                      href={formData.socialMedia.facebook}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      <Facebook className="w-5 h-5" />
-                    </a>
-                  )}
-                  {formData.socialMedia.twitter && (
-                    <a
-                      href={formData.socialMedia.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
-                    >
-                      <Twitter className="w-5 h-5" />
-                    </a>
-                  )}
-                  {formData.socialMedia.linkedin && (
-                    <a
-                      href={formData.socialMedia.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition-colors"
-                    >
-                      <Linkedin className="w-5 h-5" />
-                    </a>
-                  )}
-                  {formData.socialMedia.youtube && (
-                    <a
-                      href={formData.socialMedia.youtube}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-                    >
-                      <Youtube className="w-5 h-5" />
-                    </a>
+                <div className="flex gap-3 flex-wrap">
+                  {Object.entries(formData.socialMedia).map(
+                    ([platform, value]) => {
+                      if (!value) return null;
+                      return (
+                        <a
+                          key={platform}
+                          href={value}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`p-2 text-white rounded-lg transition-colors ${getSocialBgColor(platform)}`}
+                          title={platform}
+                        >
+                          {getSocialIcon(platform)}
+                        </a>
+                      );
+                    },
                   )}
                 </div>
               </div>

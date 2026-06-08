@@ -45,11 +45,15 @@ const YachtCard = ({ boat }: { boat: TopViewedBoat }) => (
       <div className="grid grid-cols-3 gap-1 text-xs">
         <div>
           <p className="text-gray-400">Make</p>
-          <p className="font-medium text-gray-700 truncate">{boat.make ?? '—'}</p>
+          <p className="font-medium text-gray-700 truncate">
+            {boat.make ?? '—'}
+          </p>
         </div>
         <div>
           <p className="text-gray-400">Model</p>
-          <p className="font-medium text-gray-700 truncate">{boat.model ?? '—'}</p>
+          <p className="font-medium text-gray-700 truncate">
+            {boat.model ?? '—'}
+          </p>
         </div>
         <div>
           <p className="text-gray-400">Year</p>
@@ -94,7 +98,8 @@ const TopViewedYachts = ({ socketStats }: Props) => {
         </div>
       ) : top4.length === 0 ? (
         <p className="text-sm text-gray-400 py-6 text-center bg-white rounded-xl border border-gray-100">
-          No yacht view data yet — views will appear here as visitors browse listings.
+          No yacht view data yet — views will appear here as visitors browse
+          listings.
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -44,7 +44,9 @@ const PerformanceOverview = ({
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 mt-4">
       <h2 className="text-sm font-semibold text-gray-900 mb-4">
         Performance Overview
-        <span className="ml-2 text-xs font-normal text-gray-400">This month</span>
+        <span className="ml-2 text-xs font-normal text-gray-400">
+          This month
+        </span>
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {items.map((item) => (

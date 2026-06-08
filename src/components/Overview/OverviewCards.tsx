@@ -19,9 +19,7 @@ const fmt = (n: number) => {
 const TrendBadge = ({ pct }: { pct: number }) => (
   <span
     className={`inline-flex items-center gap-0.5 text-xs font-medium px-1.5 py-0.5 rounded-full ${
-      pct >= 0
-        ? 'bg-emerald-100 text-emerald-700'
-        : 'bg-red-100 text-red-600'
+      pct >= 0 ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-600'
     }`}
   >
     {pct >= 0 ? '↑' : '↓'} {Math.abs(pct)}%
@@ -80,12 +78,18 @@ const OverviewCards = ({ cardsData }: { cardsData: OverviewCardsProps }) => {
           key={card.label}
           className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex items-start gap-4"
         >
-          <div className={`${card.accent} p-2.5 rounded-lg text-white shrink-0`}>
+          <div
+            className={`${card.accent} p-2.5 rounded-lg text-white shrink-0`}
+          >
             {card.icon}
           </div>
           <div className="min-w-0 flex-1">
-            <p className="text-xs text-gray-500 font-medium truncate">{card.label}</p>
-            <p className="text-2xl font-bold text-gray-900 mt-0.5">{card.value}</p>
+            <p className="text-xs text-gray-500 font-medium truncate">
+              {card.label}
+            </p>
+            <p className="text-2xl font-bold text-gray-900 mt-0.5">
+              {card.value}
+            </p>
             <div className="flex items-center gap-2 mt-1.5">
               {card.badge}
               <span className="text-xs text-gray-400">{card.sub}</span>

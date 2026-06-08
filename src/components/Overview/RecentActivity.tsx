@@ -71,7 +71,9 @@ const RecentActivity = ({
 
   return (
     <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex flex-col">
-      <h2 className="text-sm font-semibold text-gray-900 mb-4">Recent Activity</h2>
+      <h2 className="text-sm font-semibold text-gray-900 mb-4">
+        Recent Activity
+      </h2>
       <ul className="space-y-2 flex-1 overflow-y-auto">
         {isLoading ? (
           // Skeleton Loading
@@ -98,9 +100,15 @@ const RecentActivity = ({
                 {getIcon(activity.type)}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-800 truncate">{activity.title}</p>
-                <p className="text-xs text-gray-500 mt-0.5 truncate">{activity.description}</p>
-                <p className="text-xs text-gray-400 mt-1">{formatTimeAgo(activity.createdAt)}</p>
+                <p className="text-sm font-medium text-gray-800 truncate">
+                  {activity.title}
+                </p>
+                <p className="text-xs text-gray-500 mt-0.5 truncate">
+                  {activity.description}
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  {formatTimeAgo(activity.createdAt)}
+                </p>
               </div>
             </li>
           ))

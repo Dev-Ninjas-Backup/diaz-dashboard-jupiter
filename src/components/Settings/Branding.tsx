@@ -8,7 +8,11 @@ interface Props {
   currentLogoUrl?: string | null;
 }
 
-const Branding: React.FC<Props> = ({ formData, setFormData, currentLogoUrl }) => {
+const Branding: React.FC<Props> = ({
+  formData,
+  setFormData,
+  currentLogoUrl,
+}) => {
   const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -53,10 +57,11 @@ const Branding: React.FC<Props> = ({ formData, setFormData, currentLogoUrl }) =>
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-6">
       <h2 className="text-lg font-semibold text-gray-900 mb-1">Branding</h2>
-      <p className="text-sm text-gray-500 mb-6">Customize your dashboard logo</p>
+      <p className="text-sm text-gray-500 mb-6">
+        Customize your dashboard logo
+      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-
         {/* Left — Upload Zone */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -64,7 +69,10 @@ const Branding: React.FC<Props> = ({ formData, setFormData, currentLogoUrl }) =>
           </label>
           <div
             onClick={() => fileInputRef.current?.click()}
-            onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+            onDragOver={(e) => {
+              e.preventDefault();
+              setIsDragging(true);
+            }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
             className={`relative flex flex-col items-center justify-center gap-3 h-44 border-2 border-dashed rounded-xl cursor-pointer transition-all ${
@@ -80,7 +88,9 @@ const Branding: React.FC<Props> = ({ formData, setFormData, currentLogoUrl }) =>
               <p className="text-sm font-medium text-gray-700">
                 Click to upload or drag & drop
               </p>
-              <p className="text-xs text-gray-400 mt-1">PNG, JPG, SVG — Max 5MB</p>
+              <p className="text-xs text-gray-400 mt-1">
+                PNG, JPG, SVG — Max 5MB
+              </p>
             </div>
             {newLogoSelected && (
               <div className="absolute top-2 right-2 flex items-center gap-1 bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
@@ -136,7 +146,6 @@ const Branding: React.FC<Props> = ({ formData, setFormData, currentLogoUrl }) =>
             )}
           </div>
         </div>
-
       </div>
     </div>
   );
