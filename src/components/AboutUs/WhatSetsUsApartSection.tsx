@@ -170,7 +170,7 @@ export const WhatSetsUsApartSection: React.FC<WhatSetsUsApartSectionProps> = ({
               htmlFor="boatsSoldIn2024"
               className="block text-sm font-medium text-gray-700 mb-2"
             >
-              Boats Sold in 2024
+              Boats Sold in {new Date().getFullYear()}
             </label>
             <input
               type="text"

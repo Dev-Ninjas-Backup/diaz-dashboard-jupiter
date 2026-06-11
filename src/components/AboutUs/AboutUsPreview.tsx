@@ -196,7 +196,7 @@ export const AboutUsPreview: React.FC<AboutUsPreviewProps> = ({
                       {whatSetsUsApartData.boatsSoldIn2024}
                     </div>
                     <div className="text-sm text-gray-600 uppercase tracking-wide">
-                      Boats Sold in 2024
+                      Boats Sold in {new Date().getFullYear()}
                     </div>
                   </div>
                 )}
