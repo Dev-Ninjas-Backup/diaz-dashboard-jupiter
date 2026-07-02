@@ -51,6 +51,11 @@ const searchableRoutes = [
     category: 'Content',
   },
   {
+    name: 'Partners Management',
+    path: '/content/partners',
+    category: 'Content',
+  },
+  {
     name: 'Category Management',
     path: '/content/category',
     category: 'Content',

@@ -6,6 +6,7 @@ import ContactUs from '@/pages/ContactUs';
 import CreateNewArticle from '@/pages/CreateNewArticle';
 import FAQ from '@/pages/FAQ';
 import FeaturedBrands from '@/pages/FeaturedBrands';
+import Partners from '@/pages/Partners';
 import Footer from '@/pages/Footer';
 import OurTeam from '@/pages/OurTeam';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
@@ -55,6 +56,7 @@ const router = createBrowserRouter([
           { path: 'content/why-us', element: <WhyUs /> },
           { path: 'content/our-team', element: <OurTeam /> },
           { path: 'content/featured-brands', element: <FeaturedBrands /> },
+          { path: 'content/partners', element: <Partners /> },
           { path: 'content/category', element: <CategoryManagement /> },
           {
             path: 'content/ai-search-banner',
