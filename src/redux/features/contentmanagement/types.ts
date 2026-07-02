@@ -86,3 +86,9 @@ export interface WhatSetsUsApartData {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface PartnersParams {
+  id?: string | number;
+  partners: any;
+}
+
