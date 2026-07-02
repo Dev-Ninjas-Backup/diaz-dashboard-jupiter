@@ -100,3 +100,12 @@ export {
   useUpdateAiSearchBannerMutation,
   useDeleteAiSearchBannerMutation,
 } from './aiSearchBanner';
+
+// Partners
+export {
+  useCreatePartnerMutation,
+  useDeletePartnerMutation,
+  useGetPartnersQuery,
+  useUpdatePartnerMutation,
+} from './partners';
+

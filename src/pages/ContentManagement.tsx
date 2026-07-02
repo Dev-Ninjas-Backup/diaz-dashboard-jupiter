@@ -53,6 +53,7 @@ const DEMO_STATIC_PAGES: StaticPage[] = [
   { id: 9, title: 'Featured Brands' },
   { id: 10, title: 'Category' },
   { id: 11, title: 'AI Search Banner' },
+  { id: 12, title: 'Partners' },
 ];
 
 const ContentManagement: React.FC = () => {
@@ -118,6 +119,7 @@ const ContentManagement: React.FC = () => {
       9: '/content/featured-brands',
       10: '/content/category',
       11: '/content/ai-search-banner',
+      12: '/content/partners',
     };
 
     const route = pageRoutes[id];
