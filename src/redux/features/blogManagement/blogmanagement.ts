@@ -12,17 +12,25 @@ const blogManagementApi = baseApi.injectEndpoints({
     }),
 
     getBlogs: build.query({
-      query: () => ({
+      query: (params?: Record<string, any>) => ({
         url: `/blogs`,
         method: 'GET',
+        params,
       }),
       providesTags: (result) =>
         result
           ? [
-              ...result.map(({ id }: { id: string }) => ({
-                type: 'Blog' as const,
-                id,
-              })),
+              ...(Array.isArray(result)
+                ? result.map(({ id }: { id: string }) => ({
+                    type: 'Blog' as const,
+                    id,
+                  }))
+                : Array.isArray((result as any).data)
+                ? (result as any).data.map(({ id }: { id: string }) => ({
+                    type: 'Blog' as const,
+                    id,
+                  }))
+                : []),
               { type: 'Blog', id: 'LIST' },
             ]
           : [{ type: 'Blog', id: 'LIST' }],

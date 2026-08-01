@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import './editor.css';
@@ -11,9 +11,38 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   className = '',
   readOnly = false,
   theme = 'snow',
-  minHeight = '300px',
+  minHeight = 'auto',
 }) => {
   const quillRef = useRef<ReactQuill>(null);
+
+  // Sync external value to Quill instance when loaded asynchronously
+  useEffect(() => {
+    if (value !== undefined && value !== null) {
+      const timer = setTimeout(() => {
+        if (quillRef.current) {
+          const editor = quillRef.current.getEditor();
+          if (editor) {
+            const currentHTML = editor.root.innerHTML;
+            const normalizedValue = value.trim();
+            const normalizedCurrent = currentHTML.trim();
+
+            if (
+              normalizedCurrent === '<p><br></p>' ||
+              normalizedCurrent === '' ||
+              (normalizedCurrent !== normalizedValue && !editor.hasFocus())
+            ) {
+              try {
+                editor.clipboard.dangerouslyPasteHTML(0, value);
+              } catch {
+                editor.root.innerHTML = value;
+              }
+            }
+          }
+        }
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [value]);
 
   // Configure Quill modules with optimized toolbar
   const modules = useMemo(
@@ -71,12 +100,17 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     [],
   );
 
+  const hasContent = Boolean(
+    value && value.trim() !== '' && value.trim() !== '<p><br></p>',
+  );
+
   return (
     <div className={`rich-text-editor-wrapper ${className}`}>
       <ReactQuill
+        key={hasContent ? 'content-populated' : 'content-empty'}
         ref={quillRef}
         theme={theme}
-        value={value}
+        value={value || ''}
         onChange={onChange}
         modules={modules}
         formats={formats}
