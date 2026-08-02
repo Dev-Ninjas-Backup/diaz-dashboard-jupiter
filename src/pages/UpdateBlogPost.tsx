@@ -76,6 +76,9 @@ const UpdateBlogPost: React.FC = () => {
     schemaType: 'ARTICLE',
   });
 
+  // Track whether blog data has been loaded into form state
+  const [dataReady, setDataReady] = useState(false);
+
   const extractBlogObject = (raw: any): any => {
     if (!raw) return null;
     if (raw.blogTitle || raw.blogDescription || raw.title || raw.content)
@@ -135,6 +138,7 @@ const UpdateBlogPost: React.FC = () => {
     });
 
     setEditorKey((prev) => prev + 1);
+    setDataReady(true);
   };
 
   const handleSeoChange = (field: keyof SeoState, value: any) => {
@@ -436,12 +440,19 @@ const UpdateBlogPost: React.FC = () => {
                       Reload Content
                     </button>
                   </div>
-                  <RichTextEditor
-                    key={`editor-${id}-${editorKey}-${formData.content ? 'loaded' : 'empty'}`}
-                    value={formData.content}
-                    onChange={handleContentChange}
-                    placeholder="Write your article content here..."
-                  />
+                  {dataReady ? (
+                    <RichTextEditor
+                      key={`editor-${id}-${editorKey}`}
+                      value={formData.content}
+                      onChange={handleContentChange}
+                      placeholder="Write your article content here..."
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center py-16 text-gray-400">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mr-3"></div>
+                      Loading content...
+                    </div>
+                  )}
                 </div>
               </div>
 

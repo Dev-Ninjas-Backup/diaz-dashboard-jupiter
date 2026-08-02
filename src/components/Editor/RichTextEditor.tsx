@@ -14,32 +14,30 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   minHeight = 'auto',
 }) => {
   const quillRef = useRef<ReactQuill>(null);
+  const lastSyncedValue = useRef<string>('');
 
   // Sync external value to Quill instance when loaded asynchronously
   useEffect(() => {
-    if (value !== undefined && value !== null) {
+    if (value !== undefined && value !== null && value !== lastSyncedValue.current) {
       const timer = setTimeout(() => {
         if (quillRef.current) {
           const editor = quillRef.current.getEditor();
-          if (editor) {
-            const currentHTML = editor.root.innerHTML;
+          if (editor && !editor.hasFocus()) {
+            const currentHTML = editor.root.innerHTML.trim();
             const normalizedValue = value.trim();
-            const normalizedCurrent = currentHTML.trim();
 
+            // Only update if editor is empty or content differs from what we're trying to set
             if (
-              normalizedCurrent === '<p><br></p>' ||
-              normalizedCurrent === '' ||
-              (normalizedCurrent !== normalizedValue && !editor.hasFocus())
+              currentHTML === '<p><br></p>' ||
+              currentHTML === '' ||
+              currentHTML !== normalizedValue
             ) {
-              try {
-                editor.clipboard.dangerouslyPasteHTML(0, value);
-              } catch {
-                editor.root.innerHTML = value;
-              }
+              editor.root.innerHTML = value;
+              lastSyncedValue.current = value;
             }
           }
         }
-      }, 50);
+      }, 200);
       return () => clearTimeout(timer);
     }
   }, [value]);
@@ -100,14 +98,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     [],
   );
 
-  const hasContent = Boolean(
-    value && value.trim() !== '' && value.trim() !== '<p><br></p>',
-  );
-
   return (
     <div className={`rich-text-editor-wrapper ${className}`}>
       <ReactQuill
-        key={hasContent ? 'content-populated' : 'content-empty'}
         ref={quillRef}
         theme={theme}
         value={value || ''}
@@ -123,3 +116,4 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 };
 
 export default RichTextEditor;
+
